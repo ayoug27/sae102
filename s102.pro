@@ -5,3 +5,4 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp
+        include(MinGL2/mingl.pri)
