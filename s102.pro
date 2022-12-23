@@ -6,3 +6,6 @@ CONFIG -= qt
 SOURCES += \
         main.cpp
         include(MinGL2/mingl.pri)
+
+DISTFILES += \
+    res/doggo.si2
