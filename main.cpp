@@ -64,8 +64,8 @@ map <string, vector <string>> initSpriteMapV2(const string & sourceFile)
 }
 void showSpritePacManV2 (MinGL & window, vector <string> & spriteList, unsigned short & tick)
 {
-    nsGui::Sprite pacman(spriteList[tick % spriteList.size()], nsGraphics::Vec2D(13,13));
-    window << pacman;
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], nsGraphics::Vec2D(13,13));
+    window << spriteName;
     this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
 }
 
@@ -92,7 +92,7 @@ int main()
         window.clearScreen();
 
         //window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
-        showSpritePacManV2(window, PacManSprite["Right"],tick);
+        showSpritePacManV2(window, PacManSprite["Right"], tick);
         if (tick == 65535)
             tick = 0;
 
