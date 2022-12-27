@@ -9,37 +9,22 @@
 
 using namespace std;
 
-// FONCTION OBSOLETE ET NON UTILISE (a supprimer plus tard)
-//map <string, vector <nsGui::Sprite>> initSpriteMap(const string & sourceFile)
+nsGraphics::Vec2D rectPos;
+
+//void clavier(MinGL &window)
 //{
-//    ifstream ifs (sourceFile);
-//    map <string, vector <nsGui::Sprite>> spriteMap;
-//    string str;
-//    string title;
-//    vector <nsGui::Sprite> spriteList;
-//    for (int i = 0; !ifs.eof() ;++i)
-//    {
-//        getline(ifs,str);
-//        if (str == "")
-//        {
-//            spriteMap[title] = spriteList;
-//            spriteList.clear();
-//            i = -1;
-//        }
-//        if (i == 0)
-//            title = str;
-//        else if (i > 0)
-//            spriteList.push_back(nsGui::Sprite (str, nsGraphics::Vec2D(13,13)));
-//    }
-//    return spriteMap;
-//}
-//void showSpritePacMan (MinGL & window, vector <nsGui::Sprite> & spriteList, unsigned short & tick)
-//{
-//    window << spriteList[tick % spriteList.size()];
-//    this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
+//    // On vérifie si ZQSD est pressé, et met a jour la position
+//    if (window.isPressed({'z', false}))
+//        rectPos.setY(rectPos.getY() - 5);
+//    if (window.isPressed({'s', false}))
+//        rectPos.setY(rectPos.getY() + 5);
+//    if (window.isPressed({'q', false}))
+//        rectPos.setX(rectPos.getX() - 5);
+//    if (window.isPressed({'d', false}))
+//        rectPos.setX(rectPos.getX() + 5);
 //}
 
-map <string, vector <string>> initSpriteMapV2(const string & sourceFile)
+map <string, vector <string>> initSpriteMap(const string & sourceFile)
 {
     ifstream ifs (sourceFile);
     map <string, vector <string>> spriteMap;
@@ -62,12 +47,45 @@ map <string, vector <string>> initSpriteMapV2(const string & sourceFile)
     }
     return spriteMap;
 }
-void showSpritePacManV2 (MinGL & window, vector <string> & spriteList, unsigned short & tick)
+
+nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 {
-    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], nsGraphics::Vec2D(13,13));
-    window << spriteName;
-    this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], rectPos);
+    return spriteName;
 }
+
+nsGui::Sprite pacManControl(MinGL & window, map <string, vector <string>> PacManSprite, short unsigned tick)
+{
+    // On vérifie si ZQSD est pressé, et met a jour la position
+    if (window.isPressed({'z', false}))
+    {
+        rectPos.setY(rectPos.getY() - 12);
+        return initSprite(PacManSprite["Top"], tick);
+    }
+    if (window.isPressed({'s', false}))
+    {
+        rectPos.setY(rectPos.getY() + 12);
+        return initSprite(PacManSprite["Bottom"], tick);
+    }
+    if (window.isPressed({'q', false}))
+    {
+        rectPos.setX(rectPos.getX() - 12);
+        return initSprite(PacManSprite["Left"], tick);
+    }
+    if (window.isPressed({'d', false}))
+    {
+        rectPos.setX(rectPos.getX() + 12);
+        return initSprite(PacManSprite["Right"], tick);
+    }
+    return initSprite(PacManSprite["Right"], tick);
+}
+
+void showSprite (MinGL & window, nsGui::Sprite & spriteName)
+{
+    window << spriteName;
+    this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT));
+}
+
 
 int main()
 {
@@ -79,7 +97,7 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
-    map <string, vector <string>> PacManSprite = initSpriteMapV2("../sae102/res/sprites/pacman/spriteMap");
+    map <string, vector <string>> PacManSprite = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
 
     // On fait tourner la boucle tant que la fenêtre est ouverte
@@ -92,7 +110,8 @@ int main()
         window.clearScreen();
 
         //window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
-        showSpritePacManV2(window, PacManSprite["Right"], tick);
+        nsGui::Sprite pacman = pacManControl(window, PacManSprite, tick);
+        showSprite(window, pacman);
         if (tick == 65535)
             tick = 0;
 
