@@ -2,53 +2,102 @@
 
 #include <iostream>
 #include <thread>
-
+#include <fstream>
+#include <map>
 #include "mingl/mingl.h"
-
-#include "mingl/shape/rectangle.h"
-#include "mingl/shape/circle.h"
-#include "mingl/shape/line.h"
-#include "mingl/shape/triangle.h"
+#include "mingl/gui/sprite.h"
 
 using namespace std;
 
-void dessiner(MinGL &window)
+// FONCTION OBSOLETE ET NON UTILISE (a supprimer plus tard)
+//map <string, vector <string>> initSpriteMap(const string & sourceFile)
+//{
+//    ifstream ifs (sourceFile);
+//    map <string, vector <string>> spriteMap;
+//    string str;
+//    string title;
+//    vector <string> spriteList;
+//    for (int i = 0; !ifs.eof() ;++i)
+//    {
+//        getline(ifs,str);
+//        if (str == "")
+//        {
+//            spriteMap[title] = spriteList;
+//            spriteList.clear();
+//            i = -1;
+//        }
+//        if (i == 0)
+//            title = str;
+//        else if (i > 0)
+//            spriteList.push_back(str);
+//    }
+//    return spriteMap;
+//}
+//void showSpritePacMan (MinGL & window, vector <string> & spriteList, unsigned & i)
+//{
+//    nsGui::Sprite pacman(spriteList[i], nsGraphics::Vec2D(13,13));
+//    window << pacman;
+//    this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
+//    ++i;
+//    if (i == spriteList.size())
+//        i = 0;
+//}
+//void pacMan (MinGL & window, map <string, vector <string>> & spriteMap, unsigned & i)
+//{
+//    nsGui::Sprite pacman(spriteMap["Right"][i], nsGraphics::Vec2D(13,13));
+//    window << pacman;
+//    this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT));
+//    ++i;
+//    if (i == spriteMap["Top"].size())
+//        i = 0;
+
+//}
+
+map <string, vector <nsGui::Sprite>> initSpriteMap(const string & sourceFile)
 {
-    // Pour dessiner quelque chose avec minGL 2, vous pouvez soit instancier l'objet dans une variable et l'injecter dans la fenêtre...
-    nsShape::Rectangle rect1(nsGraphics::Vec2D(20, 20), nsGraphics::Vec2D(120, 120), nsGraphics::KBlue);
-    window << rect1;
+    ifstream ifs (sourceFile);
+    map <string, vector <nsGui::Sprite>> spriteMap;
+    string str;
+    string title;
+    vector <nsGui::Sprite> spriteList;
+    for (int i = 0; !ifs.eof() ;++i)
+    {
+        getline(ifs,str);
+        if (str == "")
+        {
+            spriteMap[title] = spriteList;
+            spriteList.clear();
+            i = -1;
+        }
+        if (i == 0)
+            title = str;
+        else if (i > 0)
+            spriteList.push_back(nsGui::Sprite (str, nsGraphics::Vec2D(13,13)));
+    }
+    return spriteMap;
+}
 
-    // ...ou l'injecter directement dans la fenêtre!
-    window << nsShape::Rectangle(nsGraphics::Vec2D(30, 30), nsGraphics::Vec2D(160, 160), nsGraphics::KPurple);
-
-    // (Vous voyez par ailleurs que l'ordre d'affichage est important, le rectangle violet masque maintenant une partie du rectangle bleu.)
-    // Vous pouvez combiner les différentes formes disponibles pour faire des choses plus complexes.
-
-    // Voilà un bouton de fermeture.
-    window << nsShape::Circle(nsGraphics::Vec2D(100, 320), 50, nsGraphics::KRed);
-    window << nsShape::Line(nsGraphics::Vec2D(70, 290), nsGraphics::Vec2D(130, 350), nsGraphics::KWhite, 3.f);
-    window << nsShape::Line(nsGraphics::Vec2D(130, 290), nsGraphics::Vec2D(70, 350), nsGraphics::KWhite, 3.f);
-
-    // Et voilà la triforce.
-    window << nsShape::Triangle(nsGraphics::Vec2D(200, 620), nsGraphics::Vec2D(400, 620), nsGraphics::Vec2D(300, 420), nsGraphics::KYellow);
-    window << nsShape::Triangle(nsGraphics::Vec2D(400, 620), nsGraphics::Vec2D(600, 620), nsGraphics::Vec2D(500, 420), nsGraphics::KYellow);
-    window << nsShape::Triangle(nsGraphics::Vec2D(300, 420), nsGraphics::Vec2D(500, 420), nsGraphics::Vec2D(400, 220), nsGraphics::KYellow);
-
-    // N'hésitez pas a lire la doc pour plus de détails.
+void showSpritePacMan (MinGL & window, vector <nsGui::Sprite> & spriteList, unsigned short & tick)
+{
+    window << spriteList[tick % spriteList.size()];
+    this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
 }
 
 int main()
 {
     // Initialise le système
-    MinGL window("01 - Shapes", nsGraphics::Vec2D(640, 640), nsGraphics::Vec2D(128, 128), nsGraphics::KBlack);
+    MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 744), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
     window.initGraphic();
 
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
+    map <string, vector <nsGui::Sprite>> PacManSprite = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
+    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
+
     // On fait tourner la boucle tant que la fenêtre est ouverte
-    while (window.isOpen())
+    for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
         // Récupère l'heure actuelle
         chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
@@ -56,8 +105,10 @@ int main()
         // On efface la fenêtre
         window.clearScreen();
 
-        // On dessine les formes géométriques
-        dessiner(window);
+        window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+        showSpritePacMan(window, PacManSprite["Top"],tick);
+        if (tick == 65535)
+            tick = 0;
 
         // On finit la frame en cours
         window.finishFrame();
@@ -71,6 +122,5 @@ int main()
         // On récupère le temps de frame
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
-
     return 0;
 }

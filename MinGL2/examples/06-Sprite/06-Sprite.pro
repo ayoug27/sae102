@@ -7,3 +7,6 @@ include(../../mingl.pri)
 
 SOURCES += \
         main.cpp
+
+DISTFILES += \
+    res/doggo.si2
