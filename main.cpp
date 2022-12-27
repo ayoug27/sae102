@@ -10,13 +10,13 @@
 using namespace std;
 
 // FONCTION OBSOLETE ET NON UTILISE (a supprimer plus tard)
-//map <string, vector <string>> initSpriteMap(const string & sourceFile)
+//map <string, vector <nsGui::Sprite>> initSpriteMap(const string & sourceFile)
 //{
 //    ifstream ifs (sourceFile);
-//    map <string, vector <string>> spriteMap;
+//    map <string, vector <nsGui::Sprite>> spriteMap;
 //    string str;
 //    string title;
-//    vector <string> spriteList;
+//    vector <nsGui::Sprite> spriteList;
 //    for (int i = 0; !ifs.eof() ;++i)
 //    {
 //        getline(ifs,str);
@@ -29,37 +29,23 @@ using namespace std;
 //        if (i == 0)
 //            title = str;
 //        else if (i > 0)
-//            spriteList.push_back(str);
+//            spriteList.push_back(nsGui::Sprite (str, nsGraphics::Vec2D(13,13)));
 //    }
 //    return spriteMap;
 //}
-//void showSpritePacMan (MinGL & window, vector <string> & spriteList, unsigned & i)
+//void showSpritePacMan (MinGL & window, vector <nsGui::Sprite> & spriteList, unsigned short & tick)
 //{
-//    nsGui::Sprite pacman(spriteList[i], nsGraphics::Vec2D(13,13));
-//    window << pacman;
+//    window << spriteList[tick % spriteList.size()];
 //    this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
-//    ++i;
-//    if (i == spriteList.size())
-//        i = 0;
-//}
-//void pacMan (MinGL & window, map <string, vector <string>> & spriteMap, unsigned & i)
-//{
-//    nsGui::Sprite pacman(spriteMap["Right"][i], nsGraphics::Vec2D(13,13));
-//    window << pacman;
-//    this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT));
-//    ++i;
-//    if (i == spriteMap["Top"].size())
-//        i = 0;
-
 //}
 
-map <string, vector <nsGui::Sprite>> initSpriteMap(const string & sourceFile)
+map <string, vector <string>> initSpriteMapV2(const string & sourceFile)
 {
     ifstream ifs (sourceFile);
-    map <string, vector <nsGui::Sprite>> spriteMap;
+    map <string, vector <string>> spriteMap;
     string str;
     string title;
-    vector <nsGui::Sprite> spriteList;
+    vector <string> spriteList;
     for (int i = 0; !ifs.eof() ;++i)
     {
         getline(ifs,str);
@@ -72,14 +58,14 @@ map <string, vector <nsGui::Sprite>> initSpriteMap(const string & sourceFile)
         if (i == 0)
             title = str;
         else if (i > 0)
-            spriteList.push_back(nsGui::Sprite (str, nsGraphics::Vec2D(13,13)));
+            spriteList.push_back(str);
     }
     return spriteMap;
 }
-
-void showSpritePacMan (MinGL & window, vector <nsGui::Sprite> & spriteList, unsigned short & tick)
+void showSpritePacManV2 (MinGL & window, vector <string> & spriteList, unsigned short & tick)
 {
-    window << spriteList[tick % spriteList.size()];
+    nsGui::Sprite pacman(spriteList[tick % spriteList.size()], nsGraphics::Vec2D(13,13));
+    window << pacman;
     this_thread::sleep_for(chrono::milliseconds(1 / FPS_LIMIT));
 }
 
@@ -93,7 +79,7 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
-    map <string, vector <nsGui::Sprite>> PacManSprite = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
+    map <string, vector <string>> PacManSprite = initSpriteMapV2("../sae102/res/sprites/pacman/spriteMap");
     nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
 
     // On fait tourner la boucle tant que la fenêtre est ouverte
@@ -105,8 +91,8 @@ int main()
         // On efface la fenêtre
         window.clearScreen();
 
-        window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
-        showSpritePacMan(window, PacManSprite["Top"],tick);
+        //window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+        showSpritePacManV2(window, PacManSprite["Right"],tick);
         if (tick == 65535)
             tick = 0;
 
