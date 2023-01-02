@@ -9,22 +9,30 @@
 
 using namespace std;
 
-nsGraphics::Vec2D rectPos;
+nsGraphics::Vec2D posWindow;
+
+struct Entity
+{
+    map <string, vector <string>> SpriteMap;
+    unsigned int X;
+    unsigned int Y;
+    nsGraphics::Vec2D posWindow;
+};
 
 //void clavier(MinGL &window)
 //{
 //    // On vérifie si ZQSD est pressé, et met a jour la position
 //    if (window.isPressed({'z', false}))
-//        rectPos.setY(rectPos.getY() - 5);
+//        posWindow.setY(posWindow.getY() - 5);
 //    if (window.isPressed({'s', false}))
-//        rectPos.setY(rectPos.getY() + 5);
+//        posWindow.setY(posWindow.getY() + 5);
 //    if (window.isPressed({'q', false}))
-//        rectPos.setX(rectPos.getX() - 5);
+//        posWindow.setX(posWindow.getX() - 5);
 //    if (window.isPressed({'d', false}))
-//        rectPos.setX(rectPos.getX() + 5);
+//        posWindow.setX(posWindow.getX() + 5);
 //}
 
-map <string, vector <string>> initSpriteMap(const string & sourceFile)
+map <string, vector <string>> initSpriteMap (const string & sourceFile)
 {
     ifstream ifs (sourceFile);
     map <string, vector <string>> spriteMap;
@@ -50,42 +58,35 @@ map <string, vector <string>> initSpriteMap(const string & sourceFile)
 
 nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 {
-    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], rectPos);
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posWindow);
     return spriteName;
 }
 
-nsGui::Sprite pacManControl(MinGL & window, map <string, vector <string>> PacManSprite, short unsigned tick)
+nsGui::Sprite pacManControl(MinGL & window, Entity PacMan, short unsigned tick)
 {
     // On vérifie si ZQSD est pressé, et met a jour la position
     if (window.isPressed({'z', false}))
     {
-        rectPos.setY(rectPos.getY() - 12);
-        return initSprite(PacManSprite["Top"], tick);
+        posWindow.setY(posWindow.getY() - 12);
+        return initSprite(PacMan.SpriteMap["Top"], tick);
     }
     if (window.isPressed({'s', false}))
     {
-        rectPos.setY(rectPos.getY() + 12);
-        return initSprite(PacManSprite["Bottom"], tick);
+        posWindow.setY(posWindow.getY() + 12);
+        return initSprite(PacMan.SpriteMap["Bottom"], tick);
     }
     if (window.isPressed({'q', false}))
     {
-        rectPos.setX(rectPos.getX() - 12);
-        return initSprite(PacManSprite["Left"], tick);
+        posWindow.setX(posWindow.getX() - 12);
+        return initSprite(PacMan.SpriteMap["Left"], tick);
     }
     if (window.isPressed({'d', false}))
     {
-        rectPos.setX(rectPos.getX() + 12);
-        return initSprite(PacManSprite["Right"], tick);
+        posWindow.setX(posWindow.getX() + 12);
+        return initSprite(PacMan.SpriteMap["Right"], tick);
     }
-    return initSprite(PacManSprite["Right"], tick);
+    return initSprite(PacMan.SpriteMap["Right"], tick);
 }
-
-void showSprite (MinGL & window, nsGui::Sprite & spriteName)
-{
-    window << spriteName;
-    this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT));
-}
-
 
 int main()
 {
@@ -97,8 +98,12 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
-    map <string, vector <string>> PacManSprite = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
+    Entity PacMan;
+    Entity RedGhost;
+    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
+    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
     nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
+
 
     // On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
@@ -109,9 +114,13 @@ int main()
         // On efface la fenêtre
         window.clearScreen();
 
-        //window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
-        nsGui::Sprite pacman = pacManControl(window, PacManSprite, tick);
-        showSprite(window, pacman);
+        window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+        nsGui::Sprite pacman = pacManControl(window, PacMan, tick);
+        nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
+        window << pacman;
+        window << redghost;
+        cout << posWindow.getX() << " " << posWindow.getY() << endl;
+
         if (tick == 65535)
             tick = 0;
 
@@ -122,10 +131,12 @@ int main()
         window.getEventManager().clearEvents();
 
         // On attend un peu pour limiter le framerate et soulager le CPU
-        this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+        this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
 
         // On récupère le temps de frame
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
     return 0;
 }
+
+// 28 x 31
