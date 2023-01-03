@@ -9,7 +9,7 @@
 
 using namespace std;
 
-nsGraphics::Vec2D posWindow;
+nsGraphics::Vec2D posPacMan;
 
 struct Entity
 {
@@ -23,13 +23,13 @@ struct Entity
 //{
 //    // On vérifie si ZQSD est pressé, et met a jour la position
 //    if (window.isPressed({'z', false}))
-//        posWindow.setY(posWindow.getY() - 5);
+//        posPacMan.setY(posPacMan.getY() - 5);
 //    if (window.isPressed({'s', false}))
-//        posWindow.setY(posWindow.getY() + 5);
+//        posPacMan.setY(posPacMan.getY() + 5);
 //    if (window.isPressed({'q', false}))
-//        posWindow.setX(posWindow.getX() - 5);
+//        posPacMan.setX(posPacMan.getX() - 5);
 //    if (window.isPressed({'d', false}))
-//        posWindow.setX(posWindow.getX() + 5);
+//        posPacMan.setX(posPacMan.getX() + 5);
 //}
 
 map <string, vector <string>> initSpriteMap (const string & sourceFile)
@@ -58,7 +58,7 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
 
 nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 {
-    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posWindow);
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
     return spriteName;
 }
 
@@ -80,22 +80,22 @@ nsGui::Sprite pacManComportment(MinGL & window, Entity PacMan, short unsigned ti
     // On vérifie si ZQSD est pressé, et met a jour la position
     if (PacMan.state == "Top")
     {
-        posWindow.setY(posWindow.getY() - 12);
+        posPacMan.setY(posPacMan.getY() - 12);
         return initSprite(PacMan.SpriteMap["Top"], tick);
     }
     if (PacMan.state == "Bottom")
     {
-        posWindow.setY(posWindow.getY() + 12);
+        posPacMan.setY(posPacMan.getY() + 12);
         return initSprite(PacMan.SpriteMap["Bottom"], tick);
     }
     if (PacMan.state == "Left")
     {
-        posWindow.setX(posWindow.getX() - 12);
+        posPacMan.setX(posPacMan.getX() - 12);
         return initSprite(PacMan.SpriteMap["Left"], tick);
     }
     if (PacMan.state == "Right")
     {
-        posWindow.setX(posWindow.getX() + 12);
+        posPacMan.setX(posPacMan.getX() + 12);
         return initSprite(PacMan.SpriteMap["Right"], tick);
     }
     return initSprite(PacMan.SpriteMap["Right"], tick);
@@ -134,7 +134,7 @@ int main()
         nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
         window << pacman;
         window << redghost;
-        // cout << posWindow.getX() << " " << posWindow.getY() << PacMan.state << endl;
+        // cout << posPacMan.getX() << " " << posPacMan.getY() << PacMan.state << endl;
         if (tick == 65535)
             tick = 0;
 
