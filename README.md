@@ -1,2 +1,2 @@
 # sae102
-tout pour pac man
+tout pour Pacman
