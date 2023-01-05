@@ -1,4 +1,4 @@
-#define FPS_LIMIT 60
+#define FPS_LIMIT 120
 
 #include <iostream>
 #include <thread>
@@ -9,28 +9,18 @@
 
 using namespace std;
 
+typedef std::vector <char> CVLine; // ligne
+typedef std::vector <CVLine> CMat; // grille
+typedef std::pair <unsigned, unsigned> CPos;
+
 nsGraphics::Vec2D posPacMan;
 
 struct Entity
 {
     map <string, vector <string>> SpriteMap;
     string state;
-    unsigned int X;
-    unsigned int Y;
+    CPos Pos;
 };
-
-//void clavier(MinGL &window)
-//{
-//    // On vérifie si ZQSD est pressé, et met a jour la position
-//    if (window.isPressed({'z', false}))
-//        posPacMan.setY(posPacMan.getY() - 5);
-//    if (window.isPressed({'s', false}))
-//        posPacMan.setY(posPacMan.getY() + 5);
-//    if (window.isPressed({'q', false}))
-//        posPacMan.setX(posPacMan.getX() - 5);
-//    if (window.isPressed({'d', false}))
-//        posPacMan.setX(posPacMan.getX() + 5);
-//}
 
 map <string, vector <string>> initSpriteMap (const string & sourceFile)
 {
@@ -56,12 +46,6 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
     return spriteMap;
 }
 
-nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
-{
-    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
-    return spriteName;
-}
-
 string pacManState(MinGL & window, string state)
 {
     if (window.isPressed({'z', false}))
@@ -75,7 +59,13 @@ string pacManState(MinGL & window, string state)
     return state;
 }
 
-nsGui::Sprite pacManComportment(MinGL & window, Entity PacMan, short unsigned tick)
+nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
+{
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
+    return spriteName;
+}
+
+nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
 {
     // On vérifie si ZQSD est pressé, et met a jour la position
     if (PacMan.state == "Top")
@@ -101,6 +91,29 @@ nsGui::Sprite pacManComportment(MinGL & window, Entity PacMan, short unsigned ti
     return initSprite(PacMan.SpriteMap["Right"], tick);
 }
 
+// WIP
+//pair <CMat, map<char, CPos>> initEntityGrid (const string & sourceFile, CMat entityGrid)
+//{
+//    pair <CMat, map<char, CPos>> gridInfo;
+//    CVLine Line;
+//    CMat entityGrid;
+//    CPos Pos;
+//    ifstream ifs (sourceFile);
+//    string str;
+//    CVLine Line;
+//    while (true)
+//    {
+//        getline(ifs,str);
+//        for (unsigned i = 0; i < str.size(); ++i)
+//        {
+//            Line.push_back(str[i]);
+//        }
+//        entityGrid.push_back(Line);
+//        Line.clear();
+//        if (ifs.eof()) break;
+//    }
+//}
+
 int main()
 {
     // Initialise le système
@@ -117,9 +130,8 @@ int main()
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
     nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
-
-
-    // On fait tourner la boucle tant que la fenêtre est ouverte
+//    CMat entityGrid =initEntityGrid("../sae102/res/mazeinitialmap", entityGrid);
+//     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
         // Récupère l'heure actuelle
@@ -130,7 +142,7 @@ int main()
 
         window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
         PacMan.state = pacManState(window, PacMan.state);
-        nsGui::Sprite pacman = pacManComportment(window, PacMan, tick);
+        nsGui::Sprite pacman = pacManComportment(PacMan, tick);
         nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
         window << pacman;
         window << redghost;
