@@ -1,3 +1,6 @@
+//*****************************************************************************
+//*************************     Initialisation     ****************************
+//*****************************************************************************
 #define FPS_LIMIT 120
 
 #include <iostream>
@@ -22,6 +25,10 @@ struct Entity
     CPos Pos;
 };
 
+
+//*****************************************************************************
+//**********************    init animation sprite     *************************
+//*****************************************************************************
 map <string, vector <string>> initSpriteMap (const string & sourceFile)
 {
     ifstream ifs (sourceFile);
@@ -46,6 +53,9 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
     return spriteMap;
 }
 
+//*****************************************************************************
+//***************************     Direction     *******************************
+//*****************************************************************************
 string pacManState(MinGL & window, string state)
 {
     if (window.isPressed({'z', false}))
@@ -59,6 +69,10 @@ string pacManState(MinGL & window, string state)
     return state;
 }
 
+
+//*****************************************************************************
+//************************     animation sprite     ***************************
+//*****************************************************************************
 nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 {
     nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
@@ -91,7 +105,9 @@ nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
     return initSprite(PacMan.SpriteMap["Right"], tick);
 }
 
-// WIP
+//*****************************************************************************
+//*************************     Work in progress     **************************
+//*****************************************************************************
 //pair <CMat, map<char, CPos>> initEntityGrid (const string & sourceFile, CMat entityGrid)
 //{
 //    pair <CMat, map<char, CPos>> gridInfo;
@@ -114,6 +130,10 @@ nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
 //    }
 //}
 
+
+//*****************************************************************************
+//******************************     Main     *********************************
+//*****************************************************************************
 int main()
 {
     // Initialise le système
@@ -124,12 +144,47 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
+    
+    //*****************************************************************************
+    //**************************     Init entity     ******************************
+    //*****************************************************************************
+    
+    // PacMan
     Entity PacMan;
+    // PacMan.Pos.first = 13;  //coordonnee X
+    // PacMan.Pos.second = 23; //coordonnee Y
+    PacMan.state = "Right"; //etat
+    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap"); //sprite
+    
+    // RedGhost
     Entity RedGhost;
-    PacMan.state = "Right";
-    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
-    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
-    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
+    // RedGhost.Pos.first = 13;  //coordonnee X
+    // RedGhost.Pos.second = 11; //coordonnee Y
+    RedGhost.state = "hunt";  //etat
+    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap"); //sprite
+    
+    // PinkGhost
+    Entity PinkGhost;
+    // PinkGhost.Pos.first = 13;  //coordonnee X
+    // PinkGhost.Pos.second = 14; //coordonnee Y
+    PinkGhost.state = "hide";  //etat
+    
+    // OrangeGhost
+    Entity OrangeGhost;
+    // OrangeGhost.Pos.first = 15;  //coordonnee X
+    // OrangeGhost.Pos.second = 14; //coordonnee Y
+    OrangeGhost.state = "hide";  //etat
+
+    // BlueGhost
+    Entity BlueGhost;
+    // BlueGhost.Pos.first = 11;  //coordonnee X
+    // BlueGhost.Pos.second = 14; //coordonnee Y
+    BlueGhost.state = "hide";  //etat
+    
+    // Maze
+    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0)); //sprite
+
+
 //    CMat entityGrid =initEntityGrid("../sae102/res/mazeinitialmap", entityGrid);
 //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
