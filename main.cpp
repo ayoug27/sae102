@@ -17,6 +17,7 @@ nsGraphics::Vec2D posPacMan;
 
 struct Entity
 {
+    char ident;
     map <string, vector <string>> SpriteMap;
     string state;
     CPos Pos;
@@ -91,28 +92,52 @@ nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
     return initSprite(PacMan.SpriteMap["Right"], tick);
 }
 
-// WIP
-//pair <CMat, map<char, CPos>> initEntityGrid (const string & sourceFile, CMat entityGrid)
-//{
-//    pair <CMat, map<char, CPos>> gridInfo;
-//    CVLine Line;
-//    CMat entityGrid;
-//    CPos Pos;
-//    ifstream ifs (sourceFile);
-//    string str;
-//    CVLine Line;
-//    while (true)
-//    {
-//        getline(ifs,str);
-//        for (unsigned i = 0; i < str.size(); ++i)
-//        {
-//            Line.push_back(str[i]);
-//        }
-//        entityGrid.push_back(Line);
-//        Line.clear();
-//        if (ifs.eof()) break;
-//    }
-//}
+pair <CMat, map<char, CPos>> initEntityMaze (const string & sourceFile)
+{
+    pair <CMat, map<char, CPos>> gridInfo;
+    CVLine maze_line;
+    string line;
+    CMat mat_maze;
+    map<char, CPos> posMap;
+    CPos Pos;
+    ifstream ifs (sourceFile);
+    while (!ifs.eof())
+    {
+        getline(ifs,line);
+        for (unsigned i = 0; i < line.size(); ++i)
+        {
+            maze_line.push_back(line[i]);
+            if (line[i] == 'P' || line[i] == 'R' || line[i] == 'B' || line[i] == 'K' || line[i] == 'O')
+            {
+                Pos.first = maze_line.size()-1;
+                Pos.second = mat_maze.size();
+                posMap[line[i]] = Pos;
+            }
+        }
+        mat_maze.push_back(maze_line);
+        maze_line.clear();
+    }
+    gridInfo.first = mat_maze;
+    gridInfo.second = posMap;
+    return gridInfo;
+}
+
+CMat initGumMaze(const string & sourceFile)
+{
+    ifstream ifs (sourceFile);
+    vector<char> maze_line;
+    string line;
+    CMat mat_maze;
+    while (!ifs.eof())
+    {
+        getline(ifs,line);
+        for (unsigned i = 0; i < line.size(); ++i)
+            maze_line.push_back(line[i]);
+        mat_maze.push_back(maze_line);
+        maze_line.clear();
+    }
+    return mat_maze;
+}
 
 int main()
 {
@@ -130,7 +155,9 @@ int main()
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
     nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
-//    CMat entityGrid =initEntityGrid("../sae102/res/mazeinitialmap", entityGrid);
+    pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
+    CMat entityGrid = gridInfo.first;
+    map<char, CPos> posMap = gridInfo.second;
 //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
@@ -162,7 +189,6 @@ int main()
         // On récupère le temps de frame
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
-    return 0;
 }
 
 // 28 x 31
