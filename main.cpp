@@ -6,6 +6,7 @@
 #include <map>
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
+#include "type.h"
 
 using namespace std;
 
@@ -58,6 +59,46 @@ string pacManState(MinGL & window, string state)
     if (window.isPressed({'d', false}))
         return "Right";
     return state;
+}
+
+void move_entity_in_mat(CMat Mat, Entity entity){
+    Mat[entity.Pos.second][entity.Pos.first] = KEmpty;
+    if (entity.state == "Top"){
+        if (Mat[entity.Pos.second-1][entity.Pos.first]!= KMur){
+            Mat[entity.Pos.second-1][entity.Pos.first] = entity.ident;
+            entity.Pos.second -=1;
+        }
+    }
+    if (entity.state == "Right"){
+        if (Mat[entity.Pos.second][entity.Pos.first+1]!= KMur){
+            if (entity.Pos.first+1 > Mat[entity.Pos.second].size()-1){
+                Mat[entity.Pos.second][0]= entity.ident;
+                entity.Pos.first = 0;
+            }
+            else {
+                Mat[entity.Pos.second][entity.Pos.first+1] = entity.ident;
+                entity.Pos.first +=1;
+            }
+        }
+    }
+    if (entity.state == "Bottom"){
+        if (Mat[entity.Pos.second+1][entity.Pos.first]!= KMur){
+            Mat[entity.Pos.second+1][entity.Pos.first] = entity.ident;
+            entity.Pos.second +=1;
+        }
+    }
+    if (entity.state == "Left"){
+        if (Mat[entity.Pos.second][entity.Pos.first-1]!= KMur){
+            if (entity.Pos.first-1 < 0){
+                Mat[entity.Pos.second][Mat[entity.Pos.second].size()-1]= entity.ident;
+                entity.Pos.first = Mat[entity.Pos.second].size()-1;
+            }
+            else {
+                Mat[entity.Pos.second][entity.Pos.first-1] = entity.ident;
+                entity.Pos.first -=1;
+            }
+        }
+    }
 }
 
 nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
