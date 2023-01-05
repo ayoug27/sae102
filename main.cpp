@@ -191,7 +191,6 @@ int main()
     bool phase5 = false;
     bool phase6 = false;
     bool phase7 = false;
-    bool phase8 = false;
 
 //    CMat entityGrid =initEntityGrid("../sae102/res/mazeinitialmap", entityGrid);
 //     On fait tourner la boucle tant que la fenêtre est ouverte
@@ -229,6 +228,55 @@ int main()
         if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
         if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
         if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase1 = true;
+    }
+    if (tick == 6750 && phase2 == false)
+    {
+        RedGhost.state = "flee";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase2 = true;
+    }
+    if (tick == 8500 && phase3 == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase3 = true;
+    }
+    if (tick == 13500 && phase4 == false)
+    {
+        RedGhost.state = "flee";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase4 = true;
+    }
+    if (tick == 14750 && phase5 == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase5 = true;
+    }
+    if (tick == 19750 && phase6 == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase6 = true;
+    }
+    if (tick == 21000 && phase7 == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase7 = true;
     }
 
     //*************************************************************************
