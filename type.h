@@ -1,6 +1,5 @@
 #ifndef TYPE_H
 #define TYPE_H
-#include "iaghost.h"
 #include <vector>
 #include <string>
 #include <map>

@@ -14,9 +14,7 @@
 
 using namespace std;
 
-typedef std::vector <char> CVLine; // ligne
-typedef std::vector <CVLine> CMat; // grille
-typedef std::pair <unsigned, unsigned> CPos;
+
 
 nsGraphics::Vec2D posPacMan;
 
@@ -301,7 +299,8 @@ int main()
     }
     if (tick == 1350 && phase[3] == false)
     {
-        RedGhost.state = "flee";
+        RedGhost.state = "flee";std::vector<unsigned> REDMOVE(std::vector<bool> sortie,unsigned yg , unsigned xg,
+                                                              unsigned yp , unsigned xp);
         if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
         if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
         if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
@@ -335,22 +334,17 @@ int main()
     //*************************************************************************
     //****************************     RED     ********************************
     //*************************************************************************
-//    if (RedGhost.state == "hunt"){
-//        vector<bool> intersection;
-//        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-//        vector<unsigned> coordonnee;
-//        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first);
-//        RedGhost.Pos.first = coordonnee[1];
-//        RedGhost.Pos.second = coordonnee[0];
-//    }
-//    if (RedGhost.state == "flee"){
-//        vector<bool> intersection;
-//        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-//        vector<unsigned> coordonnee;
-//        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0);
-//        RedGhost.Pos.first = coordonnee[1];
-//        RedGhost.Pos.second = coordonnee[0];
-//    }
+    if (RedGhost.state == "hunt"){
+        vector<bool> intersection;
+        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,gridInfo.first);
+        REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,RedGhost);
+    }
+    if (RedGhost.state == "flee"){
+        vector<bool> intersection;
+        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,gridInfo.first);
+        vector<unsigned> coordonnee;
+        REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0,RedGhost);
+    }
     if (RedGhost.state == "kill"){
 
     }
