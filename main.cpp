@@ -1,3 +1,6 @@
+//*****************************************************************************
+//*************************     Initialisation     ****************************
+//*****************************************************************************
 #define FPS_LIMIT 120
 
 #include <iostream>
@@ -7,6 +10,7 @@
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
 #include "type.h"
+#include "iaghost.h"
 
 using namespace std;
 
@@ -24,6 +28,11 @@ struct Entity
     CPos Pos;
 };
 
+
+
+//*****************************************************************************
+//**********************    init animation sprite     *************************
+//*****************************************************************************
 map <string, vector <string>> initSpriteMap (const string & sourceFile)
 {
     ifstream ifs (sourceFile);
@@ -48,6 +57,9 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
     return spriteMap;
 }
 
+//*****************************************************************************
+//***************************     Direction     *******************************
+//*****************************************************************************
 string pacManState(MinGL & window, string state)
 {
     if (window.isPressed({'z', false}))
@@ -101,6 +113,9 @@ void move_entity_in_mat(CMat Mat, Entity entity){
     }
 }
 
+//*****************************************************************************
+//************************     animation sprite     ***************************
+//*****************************************************************************
 nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 {
     nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
@@ -133,6 +148,9 @@ nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
     return initSprite(PacMan.SpriteMap["Right"], tick);
 }
 
+//*****************************************************************************
+//****************************     init maze     ******************************
+//*****************************************************************************
 pair <CMat, map<char, CPos>> initEntityMaze (const string & sourceFile)
 {
     pair <CMat, map<char, CPos>> gridInfo;
@@ -180,6 +198,9 @@ CMat initGumMaze(const string & sourceFile)
     return mat_maze;
 }
 
+//*****************************************************************************
+//******************************     Main     *********************************
+//*****************************************************************************
 int main()
 {
     // Initialise le système
@@ -190,12 +211,49 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
+    //*****************************************************************************
+    //**************************     Init entity     ******************************
+    //*****************************************************************************
+    
+    // PacMan
     Entity PacMan;
+    // PacMan.Pos.first = 13;  //coordonnee X
+    // PacMan.Pos.second = 23; //coordonnee Y
+    PacMan.state = "Right"; //etat
+    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap"); //sprite
+    
+    // RedGhost
     Entity RedGhost;
-    PacMan.state = "Right";
-    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
-    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
-    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
+    // RedGhost.Pos.first = 13;  //coordonnee X
+    // RedGhost.Pos.second = 11; //coordonnee Y
+    RedGhost.state = "hunt";  //etat
+    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap"); //sprite
+    
+    // PinkGhost
+    Entity PinkGhost;
+    // PinkGhost.Pos.first = 13;  //coordonnee X
+    // PinkGhost.Pos.second = 14; //coordonnee Y
+    PinkGhost.state = "hide";  //etat
+    
+    // OrangeGhost
+    Entity OrangeGhost;
+    // OrangeGhost.Pos.first = 15;  //coordonnee X
+    // OrangeGhost.Pos.second = 14; //coordonnee Y
+    OrangeGhost.state = "hide";  //etat
+
+    // BlueGhost
+    Entity BlueGhost;
+    // BlueGhost.Pos.first = 11;  //coordonnee X
+    // BlueGhost.Pos.second = 14; //coordonnee Y
+    BlueGhost.state = "hide";  //etat
+    
+    // Maze
+    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0)); //sprite
+    
+    
+    
+    vector<bool> phase = {false,false,false,false,false,false,false};
+
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
     CMat entityGrid = gridInfo.first;
     map<char, CPos> posMap = gridInfo.second;
@@ -209,9 +267,161 @@ int main()
         window.clearScreen();
 
         window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+        
+        //*****************************************************************************
+        //**********************     PacMan deplacement     ***************************
+        //*****************************************************************************
+        
         PacMan.state = pacManState(window, PacMan.state);
         nsGui::Sprite pacman = pacManComportment(PacMan, tick);
         nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
+
+//*****************************************************************************
+//***********************     ghost deplacement     ***************************
+//*****************************************************************************
+
+    //*************************************************************************
+    //***************************     Phase     *******************************
+    //*************************************************************************
+    if (tick == 175 && phase[0] == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase[0] = true;
+    }
+    if (tick == 675 && phase[1] == false)
+    {
+        RedGhost.state = "flee";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase[1] = true;
+    }
+    if (tick == 850 && phase[2] == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase[2] = true;
+    }
+    if (tick == 1350 && phase[3] == false)
+    {
+        RedGhost.state = "flee";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase[3] = true;
+    }
+    if (tick == 1475 && phase[4] == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase[4] = true;
+    }
+    if (tick == 1975 && phase[5] == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
+        phase[5] = true;
+    }
+    if (tick == 2100 && phase[6] == false)
+    {
+        RedGhost.state = "hunt";
+        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
+        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
+        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
+        phase[6] = true;
+    }
+
+    //*************************************************************************
+    //****************************     RED     ********************************
+    //*************************************************************************
+    if (RedGhost.state == "hunt"){
+        vector<bool> intersection;
+        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
+        vector<unsigned> coordonnee;
+        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first);
+        RedGhost.Pos.first = coordonnee[1];
+        RedGhost.Pos.second = coordonnee[0];
+    }
+    if (RedGhost.state == "flee"){
+        vector<bool> intersection;
+        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
+        vector<unsigned> coordonnee;
+        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0);
+        RedGhost.Pos.first = coordonnee[1];
+        RedGhost.Pos.second = coordonnee[0];
+    }
+    if (RedGhost.state == "kill"){
+
+    }
+    //*************************************************************************
+    //****************************     PINK     *******************************
+    //*************************************************************************
+    if (RedGhost.state == "hunt"){
+
+    }
+
+    if (RedGhost.state == "hide"){
+
+    }
+    if (RedGhost.state == "flee"){
+
+    }
+    if (RedGhost.state == "kill"){
+
+    }
+
+    //*************************************************************************
+    //**************************     Orange     *******************************
+    //*************************************************************************
+    if (RedGhost.state == "hunt"){
+
+    }
+    if (RedGhost.state == "hide"){
+
+    }
+    if (RedGhost.state == "flee"){
+
+    }
+    if (RedGhost.state == "kill"){
+
+    }
+
+    //*************************************************************************
+    //***************************     Blue     ********************************
+    //*************************************************************************
+    if (RedGhost.state == "hunt"){
+
+    }
+    if (RedGhost.state == "hide"){
+
+    }
+    if (RedGhost.state == "flee"){
+
+    }
+    if (RedGhost.state == "kill"){
+
+    }
+
+
+
+
+
+//*****************************************************************************
+//*****************************     autre     *********************************
+//*****************************************************************************
+        
+        
+        
+        
         window << pacman;
         window << redghost;
         // cout << posPacMan.getX() << " " << posPacMan.getY() << PacMan.state << endl;
