@@ -51,7 +51,7 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
 //*****************************************************************************
 //***************************     Direction     *******************************
 //*****************************************************************************
-string pacManState(MinGL & window, string state)
+string pacManviewdirection(MinGL & window, string viewdirection)
 {
     if (window.isPressed({'z', false}))
         return "Top";
@@ -61,18 +61,18 @@ string pacManState(MinGL & window, string state)
         return "Left";
     if (window.isPressed({'d', false}))
         return "Right";
-    return state;
+    return viewdirection;
 }
 
 void move_entity_in_mat(CMat Mat, Entity entity){
     Mat[entity.Pos.second][entity.Pos.first] = KEmpty;
-    if (entity.state == "Top"){
+    if (entity.viewdirection == "Top"){
         if (Mat[entity.Pos.second-1][entity.Pos.first]!= KMur){
             Mat[entity.Pos.second-1][entity.Pos.first] = entity.ident;
             entity.Pos.second -=1;
         }
     }
-    if (entity.state == "Right"){
+    if (entity.viewdirection == "Right"){
         if (Mat[entity.Pos.second][entity.Pos.first+1]!= KMur){
             if (entity.Pos.first+1 > Mat[entity.Pos.second].size()-1){
                 Mat[entity.Pos.second][0]= entity.ident;
@@ -84,13 +84,13 @@ void move_entity_in_mat(CMat Mat, Entity entity){
             }
         }
     }
-    if (entity.state == "Bottom"){
+    if (entity.viewdirection == "Bottom"){
         if (Mat[entity.Pos.second+1][entity.Pos.first]!= KMur){
             Mat[entity.Pos.second+1][entity.Pos.first] = entity.ident;
             entity.Pos.second +=1;
         }
     }
-    if (entity.state == "Left"){
+    if (entity.viewdirection == "Left"){
         if (Mat[entity.Pos.second][entity.Pos.first-1]!= KMur){
             if (entity.Pos.first-1 < 0){
                 Mat[entity.Pos.second][Mat[entity.Pos.second].size()-1]= entity.ident;
@@ -116,22 +116,22 @@ nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
 nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
 {
     // On vérifie si ZQSD est pressé, et met a jour la position
-    if (PacMan.state == "Top")
+    if (PacMan.viewdirection == "Top")
     {
         posPacMan.setY(posPacMan.getY() - 12);
         return initSprite(PacMan.SpriteMap["Top"], tick);
     }
-    if (PacMan.state == "Bottom")
+    if (PacMan.viewdirection == "Bottom")
     {
         posPacMan.setY(posPacMan.getY() + 12);
         return initSprite(PacMan.SpriteMap["Bottom"], tick);
     }
-    if (PacMan.state == "Left")
+    if (PacMan.viewdirection == "Left")
     {
         posPacMan.setX(posPacMan.getX() - 12);
         return initSprite(PacMan.SpriteMap["Left"], tick);
     }
-    if (PacMan.state == "Right")
+    if (PacMan.viewdirection == "Right")
     {
         posPacMan.setX(posPacMan.getX() + 12);
         return initSprite(PacMan.SpriteMap["Right"], tick);
@@ -210,7 +210,7 @@ int main()
     Entity PacMan;
     // PacMan.Pos.first = 13;  //coordonnee X
     // PacMan.Pos.second = 23; //coordonnee Y
-    PacMan.state = "Right"; //etat
+    PacMan.viewdirection = "Right"; //etat
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap"); //sprite
     
     // RedGhost
@@ -248,6 +248,7 @@ int main()
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
     CMat entityGrid = gridInfo.first;
     map<char, CPos> posMap = gridInfo.second;
+
 //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
@@ -263,7 +264,7 @@ int main()
         //**********************     PacMan deplacement     ***************************
         //*****************************************************************************
         
-        PacMan.state = pacManState(window, PacMan.state);
+        PacMan.viewdirection = pacManviewdirection(window, PacMan.viewdirection);
         nsGui::Sprite pacman = pacManComportment(PacMan, tick);
         nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
 
