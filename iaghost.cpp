@@ -1,7 +1,6 @@
 //*****************************************************************************
 //*************************     Initialisation     ****************************
 //*****************************************************************************
-
 #include <iostream>
 #include <thread>
 #include <fstream>
@@ -18,7 +17,7 @@ using namespace std;
 //*****************************************************************************
 //*****************************     nbsortie     ******************************
 //*****************************************************************************
-vector<bool> nbsortie(unsigned y , unsigned x, vector<vector<char> > map){
+std::vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
     vector<bool> sortie = {false,false,false,false};
     if (not(map[y-1][x] == 'X')){
         sortie[0] = true;
@@ -58,8 +57,8 @@ bool estintersection (vector<bool> sortie,string direction){
 //*****************************************************************************
 //****************************     REDMOVE     ***********+********************
 //*****************************************************************************
-vector<unsigned> REDMOVE(vector<bool> sortie,unsigned yg , unsigned xg,
-                          unsigned yp , unsigned xp)
+void REDMOVE(vector<bool> sortie,unsigned yg , unsigned xg,
+                          unsigned yp , unsigned xp, Entity RedGhost)
 {
     vector<float> distance ={0,0,0,0};
     for(unsigned i = 0;i < sortie.size();++i){
@@ -78,10 +77,8 @@ vector<unsigned> REDMOVE(vector<bool> sortie,unsigned yg , unsigned xg,
         }
     }
     vector<unsigned> deplacement;
-    if(imin == 0){deplacement[0] = xg;deplacement[1] = yg-1;}
-    if(imin == 1){deplacement[0] = xg+1;deplacement[1] = yg;}
-    if(imin == 2){deplacement[0] = xg;deplacement[1] = yg+1;}
-    if(imin == 3){deplacement[0] = xg-1;deplacement[1] = yg;}
-
-    return deplacement;
+    if(imin == 0){RedGhost.viewdirection = "up";}
+    if(imin == 1){RedGhost.viewdirection = "right";}
+    if(imin == 2){RedGhost.viewdirection = "down";}
+    if(imin == 3){RedGhost.viewdirection = "left";}
 }
