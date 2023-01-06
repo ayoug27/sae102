@@ -20,15 +20,6 @@ typedef std::pair <unsigned, unsigned> CPos;
 
 nsGraphics::Vec2D posPacMan;
 
-struct Entity
-{
-    char ident;
-    map <string, vector <string>> SpriteMap;
-    string state;
-    CPos Pos;
-};
-
-
 
 //*****************************************************************************
 //**********************    init animation sprite     *************************
@@ -343,22 +334,22 @@ int main()
     //*************************************************************************
     //****************************     RED     ********************************
     //*************************************************************************
-    if (RedGhost.state == "hunt"){
-        vector<bool> intersection;
-        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        vector<unsigned> coordonnee;
-        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first);
-        RedGhost.Pos.first = coordonnee[1];
-        RedGhost.Pos.second = coordonnee[0];
-    }
-    if (RedGhost.state == "flee"){
-        vector<bool> intersection;
-        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        vector<unsigned> coordonnee;
-        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0);
-        RedGhost.Pos.first = coordonnee[1];
-        RedGhost.Pos.second = coordonnee[0];
-    }
+//    if (RedGhost.state == "hunt"){
+//        vector<bool> intersection;
+//        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
+//        vector<unsigned> coordonnee;
+//        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first);
+//        RedGhost.Pos.first = coordonnee[1];
+//        RedGhost.Pos.second = coordonnee[0];
+//    }
+//    if (RedGhost.state == "flee"){
+//        vector<bool> intersection;
+//        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
+//        vector<unsigned> coordonnee;
+//        coordonnee = REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0);
+//        RedGhost.Pos.first = coordonnee[1];
+//        RedGhost.Pos.second = coordonnee[0];
+//    }
     if (RedGhost.state == "kill"){
 
     }

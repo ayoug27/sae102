@@ -5,19 +5,6 @@
 #include <map>
 
 
-typedef std::vector <char> CVLine; // ligne
-typedef std::vector <CVLine> CMat; // grille
-typedef std::pair <unsigned, unsigned> CPos;
-
-
-struct Entity
-{
-    std::map <std::string, std::vector <std::string>> SpriteMap;
-    std::string state;
-    CPos Pos;
-    std::string viewdirection;
-};
-
 
 std::vector<bool> nbsortie (unsigned y , unsigned x, std::vector<std::vector<char>> map);
 

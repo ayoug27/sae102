@@ -10,6 +10,7 @@
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
 #include "iaghost.h"
+#include "type.h"
 #include <cmath>
 using namespace std;
 
