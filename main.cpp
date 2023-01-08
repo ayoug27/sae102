@@ -11,6 +11,9 @@
 #include "mingl/gui/sprite.h"
 #include "type.h"
 #include "iaghost.h"
+#include "GhostH/PhaseGhost.h"
+#include "GhostH/GhostMove.h"
+#include "MatriceMove.h"
 
 using namespace std;
 
@@ -46,61 +49,6 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
     return spriteMap;
 }
 
-//*****************************************************************************
-//***************************     Direction     *******************************
-//*****************************************************************************
-string pacManviewdirection(MinGL & window, string viewdirection)
-{
-    if (window.isPressed({'z', false}))
-        return "Top";
-    if (window.isPressed({'s', false}))
-        return "Bottom";
-    if (window.isPressed({'q', false}))
-        return "Left";
-    if (window.isPressed({'d', false}))
-        return "Right";
-    return viewdirection;
-}
-
-void move_entity_in_mat(CMat Mat, Entity entity){
-    Mat[entity.Pos.second][entity.Pos.first] = KEmpty;
-    if (entity.viewdirection == "Top"){
-        if (Mat[entity.Pos.second-1][entity.Pos.first]!= KMur){
-            Mat[entity.Pos.second-1][entity.Pos.first] = entity.ident;
-            entity.Pos.second -=1;
-        }
-    }
-    if (entity.viewdirection == "Right"){
-        if (Mat[entity.Pos.second][entity.Pos.first+1]!= KMur){
-            if (entity.Pos.first+1 > Mat[entity.Pos.second].size()-1){
-                Mat[entity.Pos.second][0]= entity.ident;
-                entity.Pos.first = 0;
-            }
-            else {
-                Mat[entity.Pos.second][entity.Pos.first+1] = entity.ident;
-                entity.Pos.first +=1;
-            }
-        }
-    }
-    if (entity.viewdirection == "Bottom"){
-        if (Mat[entity.Pos.second+1][entity.Pos.first]!= KMur){
-            Mat[entity.Pos.second+1][entity.Pos.first] = entity.ident;
-            entity.Pos.second +=1;
-        }
-    }
-    if (entity.viewdirection == "Left"){
-        if (Mat[entity.Pos.second][entity.Pos.first-1]!= KMur){
-            if (entity.Pos.first-1 < 0){
-                Mat[entity.Pos.second][Mat[entity.Pos.second].size()-1]= entity.ident;
-                entity.Pos.first = Mat[entity.Pos.second].size()-1;
-            }
-            else {
-                Mat[entity.Pos.second][entity.Pos.first-1] = entity.ident;
-                entity.Pos.first -=1;
-            }
-        }
-    }
-}
 
 //*****************************************************************************
 //************************     animation sprite     ***************************
@@ -213,8 +161,8 @@ int main()
     
     // RedGhost
     Entity RedGhost;
-    // RedGhost.Pos.first = 13;  //coordonnee X
-    // RedGhost.Pos.second = 11; //coordonnee Y
+    RedGhost.Pos.first = 13;  //coordonnee X
+    RedGhost.Pos.second = 11; //coordonnee Y
     RedGhost.state = "hunt";  //etat
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap"); //sprite
     
@@ -270,135 +218,12 @@ int main()
 //***********************     ghost deplacement     ***************************
 //*****************************************************************************
 
-    //*************************************************************************
-    //***************************     Phase     *******************************
-    //*************************************************************************
-    if (tick == 175 && phase[0] == false)
-    {
-        RedGhost.state = "hunt";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
-        phase[0] = true;
-    }
-    if (tick == 675 && phase[1] == false)
-    {
-        RedGhost.state = "flee";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
-        phase[1] = true;
-    }
-    if (tick == 850 && phase[2] == false)
-    {
-        RedGhost.state = "hunt";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
-        phase[2] = true;
-    }
-    if (tick == 1350 && phase[3] == false)
-    {
-        RedGhost.state = "flee";std::vector<unsigned> REDMOVE(std::vector<bool> sortie,unsigned yg , unsigned xg,
-                                                              unsigned yp , unsigned xp);
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
-        phase[3] = true;
-    }
-    if (tick == 1475 && phase[4] == false)
-    {
-        RedGhost.state = "hunt";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
-        phase[4] = true;
-    }
-    if (tick == 1975 && phase[5] == false)
-    {
-        RedGhost.state = "hunt";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "flee";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "flee";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "flee";}
-        phase[5] = true;
-    }
-    if (tick == 2100 && phase[6] == false)
-    {
-        RedGhost.state = "hunt";
-        if (not(PinkGhost.state == "hide")){PinkGhost.state = "hunt";}
-        if (not(BlueGhost.state == "hide")){BlueGhost.state = "hunt";}
-        if (not(OrangeGhost.state == "hide")){OrangeGhost.state = "hunt";}
-        phase[6] = true;
-    }
+    Phase(phase,tick,RedGhost,PinkGhost,BlueGhost,OrangeGhost);
 
-    //*************************************************************************
-    //****************************     RED     ********************************
-    //*************************************************************************
-    if (RedGhost.state == "hunt"){
-        vector<bool> intersection;
-        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,gridInfo.first);
-        REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,RedGhost);
-    }
-    if (RedGhost.state == "flee"){
-        vector<bool> intersection;
-        intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,gridInfo.first);
-        vector<unsigned> coordonnee;
-        REDMOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0,RedGhost);
-    }
-    if (RedGhost.state == "kill"){
-
-    }
-    //*************************************************************************
-    //****************************     PINK     *******************************
-    //*************************************************************************
-    if (RedGhost.state == "hunt"){
-
-    }
-
-    if (RedGhost.state == "hide"){
-
-    }
-    if (RedGhost.state == "flee"){
-
-    }
-    if (RedGhost.state == "kill"){
-
-    }
-
-    //*************************************************************************
-    //**************************     Orange     *******************************
-    //*************************************************************************
-    if (RedGhost.state == "hunt"){
-
-    }
-    if (RedGhost.state == "hide"){
-
-    }
-    if (RedGhost.state == "flee"){
-
-    }
-    if (RedGhost.state == "kill"){
-
-    }
-
-    //*************************************************************************
-    //***************************     Blue     ********************************
-    //*************************************************************************
-    if (RedGhost.state == "hunt"){
-
-    }
-    if (RedGhost.state == "hide"){
-
-    }
-    if (RedGhost.state == "flee"){
-
-    }
-    if (RedGhost.state == "kill"){
-
-    }
-
-
-
+    RedGhostMove(RedGhost,PacMan,gridInfo.first);
+    PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
+    OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
+    BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
 
 
 //*****************************************************************************
