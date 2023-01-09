@@ -4,19 +4,16 @@
 #include <string>
 #include <map>
 
-class type
-{
-public :
-    /**
-     * @bried this is ghost
-    */
-    /**
-     * @brief RedGhostMove : blablka
-     * @param RedGhost : test
-     * @param PacMan : pacman
-     * @param map
-     */
-};
+/**
+ * @bried this is ghost
+*/
+/**
+ * @brief RedGhostMove : blablka
+ * @param RedGhost : test
+ * @param PacMan : pacman
+ * @param map
+ */
+
 
 typedef std::vector <char> CVLine;
 

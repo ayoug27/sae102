@@ -12,9 +12,11 @@
 #include "GhostH/PhaseGhost.h"
 #include "GhostH/GhostMove.h"
 #include "MatriceMove.h"
+#include "init.h"
 
 using namespace std;
 
+nsGraphics::Vec2D posPacMan;
 
 string pacManviewdirection(MinGL & window, string viewdirection)
 {
@@ -68,3 +70,39 @@ void move_entity_in_mat(CMat Mat, Entity entity){
         }
     }
 }
+
+nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
+{
+    // On vérifie si ZQSD est pressé, et met a jour la position
+    if (PacMan.viewdirection == "Top")
+    {
+        posPacMan.setY(posPacMan.getY() - 12);
+        return initSprite(PacMan.SpriteMap["Top"], tick);
+    }
+    if (PacMan.viewdirection == "Bottom")
+    {
+        posPacMan.setY(posPacMan.getY() + 12);
+        return initSprite(PacMan.SpriteMap["Bottom"], tick);
+    }
+    if (PacMan.viewdirection == "Left")
+    {
+        posPacMan.setX(posPacMan.getX() - 12);
+        return initSprite(PacMan.SpriteMap["Left"], tick);
+    }
+    if (PacMan.viewdirection == "Right")
+    {
+        posPacMan.setX(posPacMan.getX() + 12);
+        return initSprite(PacMan.SpriteMap["Right"], tick);
+    }
+    return initSprite(PacMan.SpriteMap["Right"], tick);
+}
+
+//*****************************************************************************
+//************************     animation sprite     ***************************
+//*****************************************************************************
+nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
+{
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
+    return spriteName;
+}
+

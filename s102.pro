@@ -8,7 +8,9 @@ SOURCES += \
         Ghost/PhaseGhost.cpp \
         Ghost/iaghost.cpp \
         MatriceMove.cpp \
+        game.cpp \
         grid_maze.cpp \
+        init.cpp \
         main.cpp
         include(MinGL2/mingl.pri)
 
@@ -20,4 +22,6 @@ HEADERS += \
     GhostH/PhaseGhost.h \
     GhostH/iaghost.h \
     MatriceMove.h \
+    game.h \
+    init.h \
     type.h

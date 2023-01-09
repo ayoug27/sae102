@@ -42,10 +42,10 @@ vector <float> CalculeDistance (vector<bool> sortie,unsigned yg , unsigned xg,
     return distance;
 }
 //*****************************************************************************
-//***********************    calcule distance     *****************************
+//**************************    Imin find     *********************************
 //*****************************************************************************
 unsigned TrouveIndiceMinDanstab (vector<float> Vec){
-    unsigned imin;
+    unsigned imin = 0;
     unsigned Vecmin = 0;
     for (unsigned i = 0;i < Vec.size(); ++i){
         if(Vec[i] < Vecmin){
