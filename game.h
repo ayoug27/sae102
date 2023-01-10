@@ -13,6 +13,8 @@
 #include "MatriceMove.h"
 #include "init.h"
 
+nsGraphics::Vec2D posPacMan;
+
 void game();
 
 #endif // GAME_H

@@ -11,10 +11,13 @@
 #include "iaghost.h"
 #include "GhostH/PhaseGhost.h"
 #include "GhostH/GhostMove.h"
-#include "MatriceMove.h"
 #include "init.h"
+#include "game.h"
+
 
 using namespace std;
+
+
 
 //*****************************************************************************
 //**********************    init animation sprite     *************************
@@ -92,3 +95,10 @@ CMat initGumMaze(const string & sourceFile)
     }
     return mat_maze;
 }
+
+nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
+{
+    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
+    return spriteName;
+}
+

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-
 #include "type.h"
 
 using namespace std;

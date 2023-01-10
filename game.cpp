@@ -15,12 +15,24 @@
 #include "GhostH/GhostMove.h"
 #include "MatriceMove.h"
 #include "init.h"
+#include "game.h"
+
 
 using namespace std;
 
 
 
+
 void game(){
+
+
+    pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
+    CMat entityGrid = gridInfo.first;
+//    map<char, CPos> posMap = gridInfo.second;
+    CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
+//    Entity PacMan;
+//    Entity RedGhost;
+    map<char, CPos> posMap = gridInfo.second;
     // Initialise le système
     MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 744), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
@@ -35,17 +47,21 @@ void game(){
 
     // PacMan
     Entity PacMan;
-    // PacMan.Pos.first = 13;  //coordonnee X
-    // PacMan.Pos.second = 23; //coordonnee Y
-    PacMan.viewdirection = "Right"; //etat
-    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap"); //sprite
+    PacMan.Pos = posMap[PacMan.ident];
+    posPacMan.setX(24*PacMan.Pos.first-12);
+    posPacMan.setY(24*PacMan.Pos.second-12);
+    PacMan.viewdirection = "Left"; //etat
+    PacMan.ident = 'P';
+    PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
 
     // RedGhost
     Entity RedGhost;
+    RedGhost.Pos = posMap[RedGhost.ident];
     RedGhost.Pos.first = 13;  //coordonnee X
     RedGhost.Pos.second = 11; //coordonnee Y
     RedGhost.state = "hunt";  //etat
-    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap"); //sprite
+    RedGhost.ident = 'R';
+    RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
 
     // PinkGhost
     Entity PinkGhost;
@@ -70,9 +86,6 @@ void game(){
 
     vector<bool> phase = {false,false,false,false,false,false,false};
 
-    pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
-    CMat entityGrid = gridInfo.first;
-    map<char, CPos> posMap = gridInfo.second;
 
     //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)

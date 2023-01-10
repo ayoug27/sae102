@@ -13,10 +13,13 @@
 #include "GhostH/GhostMove.h"
 #include "MatriceMove.h"
 #include "init.h"
+#include "game.h"
+
+
 
 using namespace std;
 
-nsGraphics::Vec2D posPacMan;
+
 
 string pacManviewdirection(MinGL & window, string viewdirection)
 {
@@ -70,39 +73,115 @@ void move_entity_in_mat(CMat Mat, Entity entity){
         }
     }
 }
-
-nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
+nsGui::Sprite pacManComportment(Entity & PacMan, short unsigned & tick)
 {
     // On vérifie si ZQSD est pressé, et met a jour la position
-    if (PacMan.viewdirection == "Top")
+    if (PacMan.state == "Top")
     {
-        posPacMan.setY(posPacMan.getY() - 12);
+        posPacMan.setY(24*PacMan.Pos.second-12);
         return initSprite(PacMan.SpriteMap["Top"], tick);
     }
-    if (PacMan.viewdirection == "Bottom")
+    if (PacMan.state == "Bottom")
     {
-        posPacMan.setY(posPacMan.getY() + 12);
+        posPacMan.setY(24*PacMan.Pos.second-12);
         return initSprite(PacMan.SpriteMap["Bottom"], tick);
     }
-    if (PacMan.viewdirection == "Left")
+    if (PacMan.state == "Left")
     {
-        posPacMan.setX(posPacMan.getX() - 12);
+        posPacMan.setX(24*PacMan.Pos.first-12);
         return initSprite(PacMan.SpriteMap["Left"], tick);
     }
-    if (PacMan.viewdirection == "Right")
+    else if (PacMan.state == "Right")
     {
-        posPacMan.setX(posPacMan.getX() + 12);
+        posPacMan.setX(24*PacMan.Pos.first-12);
         return initSprite(PacMan.SpriteMap["Right"], tick);
     }
-    return initSprite(PacMan.SpriteMap["Right"], tick);
+}
+//************************************************
+// En double mais différente a voir laquel gardé
+//***********************************************
+//nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick)
+//{
+//    // On vérifie si ZQSD est pressé, et met a jour la position
+//    if (PacMan.viewdirection == "Top")
+//    {
+//        posPacMan.setY(posPacMan.getY() - 12);
+//        return initSprite(PacMan.SpriteMap["Top"], tick);
+//    }
+//    if (PacMan.viewdirection == "Bottom")
+//    {
+//        posPacMan.setY(posPacMan.getY() + 12);
+//        return initSprite(PacMan.SpriteMap["Bottom"], tick);
+//    }
+//    if (PacMan.viewdirection == "Left")
+//    {
+//        posPacMan.setX(posPacMan.getX() - 12);
+//        return initSprite(PacMan.SpriteMap["Left"], tick);
+//    }
+//    if (PacMan.viewdirection == "Right")
+//    {
+//        posPacMan.setX(posPacMan.getX() + 12);
+//        return initSprite(PacMan.SpriteMap["Right"], tick);
+//    }
+//    return initSprite(PacMan.SpriteMap["Right"], tick);
+//}
+
+bool checkCollision (CMat Grid, unsigned X, unsigned Y)
+{
+    return (!(Grid[Y][X] == 'X'));
 }
 
-//*****************************************************************************
-//************************     animation sprite     ***************************
-//*****************************************************************************
-nsGui::Sprite initSprite (vector <string> & spriteList, unsigned short & tick)
+void pacManState(MinGL & window, CMat & entityGrid, Entity & PacMan)
 {
-    nsGui::Sprite spriteName (spriteList[tick % spriteList.size()], posPacMan);
-    return spriteName;
+    if (PacMan.Pos.first == 0 || PacMan.Pos.first == entityGrid.size()-1) return;
+    if (window.isPressed({'z', false}) && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second-1))
+        PacMan.state = "Top";
+    if (window.isPressed({'s', false}) && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second+1))
+        PacMan.state = "Bottom";
+    if (window.isPressed({'q', false}) && checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
+        PacMan.state = "Left";
+    if (window.isPressed({'d', false}) && checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
+        PacMan.state = "Right";
+}
+
+void pacManMovement(CMat & entityGrid, Entity & PacMan)
+{
+    entityGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
+    if (PacMan.state == "Top" && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second-1))
+    {
+        --PacMan.Pos.second;
+    }
+    if (PacMan.state == "Bottom" && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second+1))
+    {
+        ++PacMan.Pos.second;
+
+    }
+    if (PacMan.state == "Left")
+    {
+        if (PacMan.Pos.first != 0)
+        {
+            if (checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
+                --PacMan.Pos.first;
+        }
+        else
+        {
+            PacMan.Pos.first = entityGrid.size()-1;
+            PacMan.Pos.second = 14;
+        }
+    }
+    if (PacMan.state == "Right" && checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
+    {
+        if (PacMan.Pos.first != entityGrid.size()-1)
+        {
+            if (checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
+                ++PacMan.Pos.first;
+        }
+        else
+        {
+            PacMan.Pos.first = 0;
+            PacMan.Pos.second = 14;
+        }
+    }
+    entityGrid[PacMan.Pos.second][PacMan.Pos.first] = PacMan.ident;
 }
 

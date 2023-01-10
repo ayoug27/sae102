@@ -3,7 +3,8 @@
 #include <vector>
 #include <string>
 #include <map>
-
+#include "mingl/mingl.h"
+#include "mingl/gui/sprite.h"
 /**
  * @bried this is ghost
 */

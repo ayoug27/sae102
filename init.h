@@ -19,5 +19,6 @@ std::pair <CMat, std::map<char, CPos>> initEntityMaze (const std::string & sourc
 
 CMat initGumMaze(const std::string & sourceFile);
 
+nsGui::Sprite initSprite (std::vector <std::string> & spriteList, unsigned short & tick);
 
 #endif // INIT_H

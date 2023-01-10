@@ -22,8 +22,12 @@ std::string pacManviewdirection(MinGL & window, std::string viewdirection);
 
 void move_entity_in_mat(CMat Mat, Entity entity);
 
-nsGui::Sprite pacManComportment(Entity PacMan, short unsigned tick);
+nsGui::Sprite pacManComportment(Entity & PacMan, short unsigned & tick);
 
-nsGui::Sprite initSprite (std::vector <std::string> & spriteList, unsigned short & tick);
+bool checkCollision (CMat Grid, unsigned X, unsigned Y);
+
+void pacManState(MinGL & window, CMat & entityGrid, Entity & PacMan);
+
+void pacManMovement(CMat & entityGrid, Entity & PacMan);
 
 #endif // MATRICEMOVE_H
