@@ -95,7 +95,6 @@ void game(){
         GhostMovement(entityGrid,OrangeGhost, tick);
         GhostMovement(entityGrid,PinkGhost, tick);
         }
-
         window << initSprite(PacMan, entityGrid, tick);
         window << initSprite(RedGhost, entityGrid, tick);
         window << initSprite(BlueGhost, entityGrid, tick);
