@@ -11,14 +11,20 @@
 #include "GhostH/GhostMove.h"
 #include "GhostH/iaghost.h"
 #include "GhostH/PhaseGhost.h"
+#include "affichage.h"
 
 
 using namespace std;
 
 
 void game(){
+
+    unsigned score = 0;
+    unsigned niveau = 1;
+    unsigned vies = 3;
+
     // Initialise le système
-    MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 744), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
+    MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 790), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
     window.initGraphic();
 
@@ -100,7 +106,9 @@ void game(){
         window << initSprite(BlueGhost, entityGrid, tick);
         window << initSprite(OrangeGhost, entityGrid, tick);
         window << initSprite(PinkGhost, entityGrid, tick);
-
+        affichageScore(window, score);
+        affichageVies(PacMan.SpriteMap, window, vies);
+        affichageNiveau(window, niveau);
         //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
         for (unsigned y = 0; y < entityGrid.size(); ++y)
                 {

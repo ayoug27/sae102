@@ -7,6 +7,7 @@ SOURCES += \
         Ghost/GhostMove.cpp \
         Ghost/PhaseGhost.cpp \
         Ghost/iaghost.cpp \
+        affichage.cpp \
         fonction.cpp \
         game.cpp \
         main.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     GhostH/GhostMove.h \
     GhostH/PhaseGhost.h \
     GhostH/iaghost.h \
+    affichage.h \
     fonction.h \
     game.h \
     type.h
