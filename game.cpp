@@ -1,4 +1,4 @@
-#define FPS_LIMIT 120
+#define FPS_LIMIT 10
 #include <iostream>
 #include <thread>
 #include <fstream>
@@ -34,19 +34,19 @@ void game(){
     PacMan.viewdirection = "Left";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
-    RedGhost.state = "hunt";
+    RedGhost.state = "flee";
     RedGhost.viewdirection = "Left";
     RedGhost.ident = 'R';
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
-    OrangeGhost.state = "hunt";
+    OrangeGhost.state = "flee";
     OrangeGhost.viewdirection = "Top";
     OrangeGhost.ident = 'O';
     OrangeGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/orangeghost/spriteMap");
-    PinkGhost.state = "hunt";
+    PinkGhost.state = "flee";
     PinkGhost.viewdirection = "Bottom";
     PinkGhost.ident = 'K';
     PinkGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/pinkghost/spriteMap");
-    BlueGhost.state = "hunt";
+    BlueGhost.state = "flee";
     BlueGhost.viewdirection = "Bottom";
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
@@ -73,12 +73,17 @@ void game(){
         window.clearScreen();
 
         window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+
         showGumInMaze(window,gumGrid);
         pacManDirection(window, entityGrid, PacMan);
         pacManMovement(entityGrid, PacMan, tick);
         gumEating(PacMan,gumGrid);
 
-        Phase(phase,tick,RedGhost,PinkGhost,BlueGhost,OrangeGhost);
+        Phase(phase,tick,RedGhost);
+        Phase(phase,tick,PinkGhost);
+        Phase(phase,tick,OrangeGhost);
+        Phase(phase,tick,BlueGhost);
+
 
         RedGhostMove(RedGhost,PacMan,gridInfo.first);
         PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
@@ -98,14 +103,14 @@ void game(){
         window << initSprite(PinkGhost, entityGrid, tick);
 
         //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
-//        for (unsigned y = 0; y < entityGrid.size(); ++y)
-//                {
-//                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
-//                    {
-//                        cout << entityGrid[y][x];
-//                    }
-//                    cout << endl;
-//                }
+        for (unsigned y = 0; y < entityGrid.size(); ++y)
+                {
+                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
+                    {
+                        cout << entityGrid[y][x];
+                    }
+                    cout << endl;
+                }
         //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;

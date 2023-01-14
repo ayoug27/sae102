@@ -28,7 +28,6 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
         if(RedGhost.viewdirection == "Bottom"){intersection[0] = false;}
         if(RedGhost.viewdirection == "Left"){intersection[1] = false;}
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,RedGhost);
-//        cout << RedGhost.viewdirection << endl;
     }
     if (RedGhost.state == "flee"){
         vector<bool> intersection;
@@ -37,7 +36,7 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
         if(RedGhost.viewdirection == "Right"){intersection[3] = false;}
         if(RedGhost.viewdirection == "Bottom"){intersection[0] = false;}
         if(RedGhost.viewdirection == "Left"){intersection[1] = false;}
-        MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0,RedGhost);
+        MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,0,0,RedGhost);
     }
     if (RedGhost.state == "kill"){
         vector<bool> intersection;
@@ -117,7 +116,7 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
         if(BlueGhost.viewdirection == "Right"){intersection[3] = false;}
         if(BlueGhost.viewdirection == "Bottom"){intersection[0] = false;}
         if(BlueGhost.viewdirection == "Left"){intersection[1] = false;}
-        MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,28,0,BlueGhost);
+        MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,34,28,BlueGhost);
     }
     if (BlueGhost.state == "kill"){
         vector<bool> intersection;
@@ -155,7 +154,7 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         if(OrangeGhost.viewdirection == "Right"){intersection[3] = false;}
         if(OrangeGhost.viewdirection == "Bottom"){intersection[0] = false;}
         if(OrangeGhost.viewdirection == "Left"){intersection[1] = false;}
-        MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,28,0,OrangeGhost);
+        MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,0,28,OrangeGhost);
     }
     if (OrangeGhost.state == "kill"){
         vector<bool> intersection;

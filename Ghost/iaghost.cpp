@@ -18,12 +18,12 @@ using namespace std;
 //*****************************     nbsortie     ******************************
 //*****************************************************************************
 vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
-    vector<bool> sortie = {false,false,false,false};
+    vector<bool> sortie = {true,true,true,true};
 
-    if (not(map[y-1][x] == 'X')){sortie[0] = true;}
-    if (not(map[y][x+1] == 'X')){sortie[1] = true;}
-    if (not(map[y+1][x] == 'X')){sortie[2] = true;}
-    if (not(map[y][x-1] == 'X')){sortie[3] = true;}
+    if (map[y-1][x] == 'X'){sortie[0] = false;}
+    if (map[y][x+1] == 'X'){sortie[1] = false;}
+    if (map[y+1][x] == 'X'){sortie[2] = false;}
+    if (map[y][x-1] == 'X'){sortie[3] = false;}
     return sortie;
 }
 
@@ -85,7 +85,6 @@ void MOVE(vector<bool> sortie,unsigned yg , unsigned xg,
 //        cout << distance[i] << endl;
 //    }
     unsigned imin = TrouveIndiceMinDanstab(distance);
-    cout << imin << endl;
     if(imin == 0){entity.viewdirection = "Top";}
     if(imin == 1){entity.viewdirection = "Right";}
     if(imin == 2){entity.viewdirection = "Bottom";}

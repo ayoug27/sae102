@@ -7,10 +7,7 @@
 
 
 void Phase (std::vector<bool> VecPhase, unsigned short tick,
-                    Entity & RedGhost,
-                    Entity & PinkGhost,
-                    Entity & BlueGhost,
-                    Entity & OrangeGhost);
+                    Entity & entity);
 
 
 
