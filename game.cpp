@@ -85,11 +85,12 @@ void game(){
         OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
         BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
 
-        move_entity_in_mat(gridInfo.first, RedGhost);
-        move_entity_in_mat(gridInfo.first, BlueGhost);
-        move_entity_in_mat(gridInfo.first, OrangeGhost);
-        move_entity_in_mat(gridInfo.first, OrangeGhost);
-        cout << RedGhost.viewdirection << endl;
+        pacManMovement(entityGrid,RedGhost, tick);
+        pacManMovement(entityGrid,BlueGhost, tick);
+        pacManMovement(entityGrid,OrangeGhost, tick);
+        pacManMovement(entityGrid,PinkGhost, tick);
+
+
         window << initSprite(PacMan, entityGrid, tick);
         window << initSprite(RedGhost, entityGrid, tick);
         window << initSprite(BlueGhost, entityGrid, tick);

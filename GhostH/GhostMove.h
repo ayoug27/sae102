@@ -1,7 +1,7 @@
 #ifndef GHOSTMOVE_H
 #define GHOSTMOVE_H
 
-#include "../type.h"
+#include "type.h"
 #include <vector>
 #include <string>
 #include <map>

@@ -15,10 +15,10 @@ using namespace std;
 
 
 void Phase (vector<bool> VecPhase, unsigned short tick,
-                    Entity RedGhost,
-                    Entity PinkGhost,
-                    Entity BlueGhost,
-                    Entity OrangeGhost){
+                    Entity &RedGhost,
+                    Entity &PinkGhost,
+                    Entity &BlueGhost,
+                    Entity &OrangeGhost){
     if (tick == 175 && VecPhase[0] == false)
     {
         RedGhost.state = "hunt";

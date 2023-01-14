@@ -1,6 +1,6 @@
 #ifndef IAGHOST_H
 #define IAGHOST_H
-#include "../type.h"
+#include "type.h"
 #include <vector>
 #include <string>
 #include <map>
