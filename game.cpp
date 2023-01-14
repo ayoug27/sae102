@@ -84,7 +84,7 @@ void game(){
         Phase(phase,tick,OrangeGhost);
         Phase(phase,tick,BlueGhost);
 
-
+        if (tick%2 == 0){
         RedGhostMove(RedGhost,PacMan,gridInfo.first);
         PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
         OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
@@ -94,7 +94,7 @@ void game(){
         GhostMovement(entityGrid,BlueGhost, tick);
         GhostMovement(entityGrid,OrangeGhost, tick);
         GhostMovement(entityGrid,PinkGhost, tick);
-
+        }
 
         window << initSprite(PacMan, entityGrid, tick);
         window << initSprite(RedGhost, entityGrid, tick);

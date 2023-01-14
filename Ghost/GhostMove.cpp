@@ -66,10 +66,10 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
         if(PinkGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp -= 2;}
-        if(PacMan.viewdirection == "Right"){xp += 2;}
-        if(PacMan.viewdirection == "Bottom"){yp += 2;}
-        if(PacMan.viewdirection == "Left"){xp -= 2;}
+        if(PacMan.viewdirection == "Top"){yp += 2;}
+        if(PacMan.viewdirection == "Right"){xp -= 2;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 2;}
+        if(PacMan.viewdirection == "Left"){xp += 2;}
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,xp,yp,PinkGhost);
     }
     if (PinkGhost.state == "flee"){

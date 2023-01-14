@@ -86,7 +86,7 @@ void pacManDirection(MinGL & window, CMat & entityGrid, Entity & PacMan)
 }
 void GhostMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
 {
-    if (tick%1 == 0)
+    if (tick%2 == 0)
     {
         entityGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
         if (PacMan.viewdirection == "Top" && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second-1))
@@ -101,7 +101,7 @@ void GhostMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
         }
         if (PacMan.viewdirection == "Left")
         {
-            if (PacMan.Pos.first > 1)
+            if (PacMan.Pos.first != 0)
             {
                 if (checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
                     --PacMan.Pos.first;
@@ -121,7 +121,7 @@ void GhostMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
             }
             else
             {
-                PacMan.Pos.first = 1;
+                PacMan.Pos.first = 0;
                 PacMan.Pos.second = 14;
             }
         }
@@ -145,14 +145,14 @@ void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
         }
         if (PacMan.viewdirection == "Left")
         {
-            if (PacMan.Pos.first > 1)
+            if (PacMan.Pos.first != 0)
             {
                 if (checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
                     --PacMan.Pos.first;
             }
             else
             {
-                PacMan.Pos.first =  entityGrid[1].size()-1;
+                PacMan.Pos.first = entityGrid[1].size()-1;
                 PacMan.Pos.second = 14;
             }
         }
@@ -165,14 +165,13 @@ void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
             }
             else
             {
-                PacMan.Pos.first = 1;
+                PacMan.Pos.first = 0;
                 PacMan.Pos.second = 14;
             }
         }
         entityGrid[PacMan.Pos.second][PacMan.Pos.first] = PacMan.ident;
     }
 }
-
 pair <CMat, map<char, CPos>> initEntityMaze (const string & sourceFile)
 {
     pair <CMat, map<char, CPos>> gridInfo;

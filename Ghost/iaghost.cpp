@@ -18,12 +18,36 @@ using namespace std;
 //*****************************     nbsortie     ******************************
 //*****************************************************************************
 vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
-    vector<bool> sortie = {true,true,true,true};
+    vector<bool> sortie = {false,false,false,false};
 
-    if (map[y-1][x] == 'X'){sortie[0] = false;}
-    if (map[y][x+1] == 'X'){sortie[1] = false;}
-    if (map[y+1][x] == 'X'){sortie[2] = false;}
-    if (map[y][x-1] == 'X'){sortie[3] = false;}
+    if (y == 14){
+        if (x == 0){
+            if (not(map[y-1][x] == 'X')){sortie[0] = true;}
+            if (not(map[y][x+1] == 'X')){sortie[1] = true;}
+            if (not(map[y+1][x] == 'X')){sortie[2] = true;}
+            sortie[3] = true;
+        }
+        else if (x == map.size()-5){
+            if (not(map[y-1][x] == 'X')){sortie[0] = true;}
+            sortie[1] = true;
+            if (not(map[y+1][x] == 'X')){sortie[2] = true;}
+            if (not(map[y][x-1] == 'X')){sortie[3] = true;}
+        }
+        else {
+            if (not(map[y-1][x] == 'X')){sortie[0] = true;}
+            if (not(map[y][x+1] == 'X')){sortie[1] = true;}
+            if (not(map[y+1][x] == 'X')){sortie[2] = true;}
+            if (not(map[y][x-1] == 'X')){sortie[3] = true;}
+        }
+    }
+    else {
+        if (not(map[y-1][x] == 'X')){sortie[0] = true;}
+        if (not(map[y][x+1] == 'X')){sortie[1] = true;}
+        if (not(map[y+1][x] == 'X')){sortie[2] = true;}
+        if (not(map[y][x-1] == 'X')){sortie[3] = true;}
+
+    }
+
     return sortie;
 }
 
