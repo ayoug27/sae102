@@ -37,7 +37,7 @@ void game(){
     Entity PinkGhost;
     Entity BlueGhost;
 
-    PacMan.viewdirection = "Left";
+    PacMan.viewdirection = "Top";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     RedGhost.state = "flee";
@@ -110,14 +110,14 @@ void game(){
         affichageVies(PacMan.SpriteMap, window, vies);
         affichageNiveau(window, niveau);
         //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
-        for (unsigned y = 0; y < entityGrid.size(); ++y)
-                {
-                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
-                    {
-                        cout << entityGrid[y][x];
-                    }
-                    cout << endl;
-                }
+//        for (unsigned y = 0; y < entityGrid.size(); ++y)
+//                {
+//                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
+//                    {
+//                        cout << entityGrid[y][x];
+//                    }
+//                    cout << endl;
+//                }
         //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;
