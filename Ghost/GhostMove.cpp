@@ -80,10 +80,10 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
         if(PinkGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 2;}
-        if(PacMan.viewdirection == "Right"){xp -= 2;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 2;}
-        if(PacMan.viewdirection == "Left"){xp += 2;}
+        if(PacMan.viewdirection == "Top"){yp += 4;}
+        if(PacMan.viewdirection == "Right"){xp -= 4;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 4;}
+        if(PacMan.viewdirection == "Left"){xp += 4;}
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,xp,yp,PinkGhost);
     }
     if (PinkGhost.state == "flee"){
@@ -136,11 +136,11 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
         if(BlueGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 5;}
-        if(PacMan.viewdirection == "Right"){xp -= 3;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 1;}
-        if(PacMan.viewdirection == "Left"){xp += 4;}
-        MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,BlueGhost);
+        if(PacMan.viewdirection == "Top"){yp += 15;}
+        if(PacMan.viewdirection == "Right"){xp -= 13;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 11;}
+        if(PacMan.viewdirection == "Left"){xp += 14;}
+        MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,xp,yp,BlueGhost);
     }
     if (BlueGhost.state == "flee"){
         vector<bool> intersection;
@@ -192,10 +192,10 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         if(OrangeGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 2;}
-        if(PacMan.viewdirection == "Right"){xp -= 0;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 3;}
-        if(PacMan.viewdirection == "Left"){xp += 1;}
+        if(PacMan.viewdirection == "Top"){yp += 12;}
+        if(PacMan.viewdirection == "Right"){xp -= 10;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 13;}
+        if(PacMan.viewdirection == "Left"){xp += 11;}
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,xp,yp,OrangeGhost);
 //                cout << OrangeGhost.viewdirection << endl;
     }
