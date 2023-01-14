@@ -14,8 +14,7 @@ std::vector <float> CalculeDistance (std::vector<bool> sortie,unsigned yg ,
 unsigned TrouveIndiceMinDanstab (std::vector<float> Vec);
 
 void MOVE(std::vector<bool> sortie,unsigned yg , unsigned xg,
-                          unsigned yp , unsigned xp, Entity RedGhost);
+                          unsigned yp , unsigned xp, Entity & entity);
 
 
 #endif // IAGHOST_H
-

@@ -1,38 +1,22 @@
-//*****************************************************************************
-//*************************     Initialisation     ****************************
-//*****************************************************************************
 #define FPS_LIMIT 120
-
 #include <iostream>
 #include <thread>
 #include <fstream>
 #include <map>
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
+#include "mingl/shape/rectangle.h"
 #include "type.h"
-#include "iaghost.h"
-#include "GhostH/PhaseGhost.h"
+#include "fonction.h"
 #include "GhostH/GhostMove.h"
-#include "MatriceMove.h"
-#include "init.h"
-#include "game.h"
+#include "GhostH/iaghost.h"
+#include "GhostH/PhaseGhost.h"
 
 
 using namespace std;
 
 
-
-
 void game(){
-
-
-    pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
-    CMat entityGrid = gridInfo.first;
-//    map<char, CPos> posMap = gridInfo.second;
-    CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
-//    Entity PacMan;
-//    Entity RedGhost;
-    map<char, CPos> posMap = gridInfo.second;
     // Initialise le système
     MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 744), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
@@ -41,52 +25,44 @@ void game(){
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
-    //*****************************************************************************
-    //**************************     Init entity     ******************************
-    //*****************************************************************************
-
-    // PacMan
     Entity PacMan;
-    PacMan.Pos = posMap[PacMan.ident];
-    posPacMan.setX(24*PacMan.Pos.first-12);
-    posPacMan.setY(24*PacMan.Pos.second-12);
-    PacMan.viewdirection = "Left"; //etat
+    Entity RedGhost;
+    Entity OrangeGhost;
+    Entity PinkGhost;
+    Entity BlueGhost;
+
+    PacMan.viewdirection = "Left";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
-
-    // RedGhost
-    Entity RedGhost;
-    RedGhost.Pos = posMap[RedGhost.ident];
-    RedGhost.Pos.first = 13;  //coordonnee X
-    RedGhost.Pos.second = 11; //coordonnee Y
-    RedGhost.state = "hunt";  //etat
+    RedGhost.state = "hunt";
+    RedGhost.viewdirection = "Left";
     RedGhost.ident = 'R';
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
+    OrangeGhost.state = "hunt";
+    OrangeGhost.viewdirection = "Top";
+    OrangeGhost.ident = 'O';
+    OrangeGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/orangeghost/spriteMap");
+    PinkGhost.state = "hunt";
+    PinkGhost.viewdirection = "Bottom";
+    PinkGhost.ident = 'K';
+    PinkGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/pinkghost/spriteMap");
+    BlueGhost.state = "hunt";
+    BlueGhost.viewdirection = "Bottom";
+    BlueGhost.ident = 'B';
+    BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
 
-    // PinkGhost
-    Entity PinkGhost;
-    // PinkGhost.Pos.first = 13;  //coordonnee X
-    // PinkGhost.Pos.second = 14; //coordonnee Y
-    PinkGhost.state = "hide";  //etat
+    pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
+    CMat entityGrid = gridInfo.first;
+    map<char, CPos> posMap = gridInfo.second;
+    CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
 
-    // OrangeGhost
-    Entity OrangeGhost;
-    // OrangeGhost.Pos.first = 15;  //coordonnee X
-    // OrangeGhost.Pos.second = 14; //coordonnee Y
-    OrangeGhost.state = "hide";  //etat
-
-    // BlueGhost
-    Entity BlueGhost;
-    // BlueGhost.Pos.first = 11;  //coordonnee X
-    // BlueGhost.Pos.second = 14; //coordonnee Y
-    BlueGhost.state = "hide";  //etat
-
-    // Maze
-    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0)); //sprite
-
+    PacMan.Pos = posMap[PacMan.ident];
+    RedGhost.Pos = posMap[RedGhost.ident];
+    OrangeGhost.Pos = posMap[OrangeGhost.ident];
+    PinkGhost.Pos = posMap[PinkGhost.ident];
+    BlueGhost.Pos = posMap[BlueGhost.ident];
     vector<bool> phase = {false,false,false,false,false,false,false};
-
-
+    nsGui::Sprite maze("../sae102/res/sprites/maze0.si2", nsGraphics::Vec2D(0,0));
     //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
@@ -97,33 +73,39 @@ void game(){
         window.clearScreen();
 
         window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
+        showGumInMaze(window,gumGrid);
+        pacManDirection(window, entityGrid, PacMan);
+        pacManMovement(entityGrid, PacMan, tick);
+        gumEating(PacMan,gumGrid);
 
-        //*****************************************************************************
-        //**********************     PacMan deplacement     ***************************
-        //*****************************************************************************
+        Phase(phase,tick,RedGhost,PinkGhost,BlueGhost,OrangeGhost);
 
-        PacMan.viewdirection = pacManviewdirection(window, PacMan.viewdirection);
-        nsGui::Sprite pacman = pacManComportment(PacMan, tick);
-        nsGui::Sprite redghost (RedGhost.SpriteMap["Left"][tick % RedGhost.SpriteMap["Left"].size()], nsGraphics::Vec2D(24*(27-1)-12, 24*(2-1)-12));
+        RedGhostMove(RedGhost,PacMan,gridInfo.first);
+        PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
+        OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
+        BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
 
-    //*****************************************************************************
-    //***********************     ghost deplacement     ***************************
-    //*****************************************************************************
+        move_entity_in_mat(gridInfo.first, RedGhost);
+        move_entity_in_mat(gridInfo.first, BlueGhost);
+        move_entity_in_mat(gridInfo.first, OrangeGhost);
+        move_entity_in_mat(gridInfo.first, OrangeGhost);
+        cout << RedGhost.viewdirection << endl;
+        window << initSprite(PacMan, entityGrid, tick);
+        window << initSprite(RedGhost, entityGrid, tick);
+        window << initSprite(BlueGhost, entityGrid, tick);
+        window << initSprite(OrangeGhost, entityGrid, tick);
+        window << initSprite(PinkGhost, entityGrid, tick);
 
-    Phase(phase,tick,RedGhost,PinkGhost,BlueGhost,OrangeGhost);
-
-    RedGhostMove(RedGhost,PacMan,gridInfo.first);
-    PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
-    OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
-    BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
-
-
-    //*****************************************************************************
-    //*****************************     autre     *********************************
-    //*****************************************************************************
-        window << pacman;
-        window << redghost;
-        // cout << posPacMan.getX() << " " << posPacMan.getY() << PacMan.state << endl;
+        //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
+//        for (unsigned y = 0; y < entityGrid.size(); ++y)
+//                {
+//                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
+//                    {
+//                        cout << entityGrid[y][x];
+//                    }
+//                    cout << endl;
+//                }
+        //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;
 
@@ -134,11 +116,9 @@ void game(){
         window.getEventManager().clearEvents();
 
         // On attend un peu pour limiter le framerate et soulager le CPU
-        this_thread::sleep_for(chrono::milliseconds(4000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+        this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
 
         // On récupère le temps de frame
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
 }
-
-// 28 x 31

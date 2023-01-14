@@ -13,30 +13,28 @@
 #include "GhostH/GhostMove.h"
 #include "GhostH/iaghost.h"
 #include <cmath>
-#include "../MatriceMove.h"
+
 using namespace std;
 
 //*****************************************************************************
 //******************************     RED     **********************************
 //*****************************************************************************
-void RedGhostMove (Entity RedGhost, Entity PacMan, CMat map){
+void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
     if (RedGhost.state == "hunt"){
         vector<bool> intersection;
         intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,RedGhost);
-        move_entity_in_mat(map,RedGhost);
+//        cout << RedGhost.viewdirection << endl;
     }
     if (RedGhost.state == "flee"){
         vector<bool> intersection;
         intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,28,0,RedGhost);
-        move_entity_in_mat(map,RedGhost);
     }
     if (RedGhost.state == "kill"){
         vector<bool> intersection;
         intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,13,14,RedGhost);
-        move_entity_in_mat(map,RedGhost);
     }
 
     if (RedGhost.state == "hide"){
@@ -52,19 +50,16 @@ void PinkGhostMove (Entity PinkGhost ,Entity PacMan, CMat map){
         vector<bool> intersection;
         intersection = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,PinkGhost);
-        move_entity_in_mat(map,PinkGhost);
     }
     if (PinkGhost.state == "flee"){
         vector<bool> intersection;
         intersection = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,28,0,PinkGhost);
-        move_entity_in_mat(map,PinkGhost);
     }
     if (PinkGhost.state == "kill"){
         vector<bool> intersection;
         intersection = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,13,14,PinkGhost);
-        move_entity_in_mat(map,PinkGhost);
     }
 
     if (PinkGhost.state == "hide"){
@@ -75,24 +70,21 @@ void PinkGhostMove (Entity PinkGhost ,Entity PacMan, CMat map){
 //*****************************************************************************
 //******************************     Blue     *********************************
 //*****************************************************************************
-void BlueGhostMove (Entity BlueGhost,Entity PacMan, CMat map){
+void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     if (BlueGhost.state == "hunt"){
         vector<bool> intersection;
         intersection = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,BlueGhost);
-        move_entity_in_mat(map,BlueGhost);
     }
     if (BlueGhost.state == "flee"){
         vector<bool> intersection;
         intersection = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,28,0,BlueGhost);
-        move_entity_in_mat(map,BlueGhost);
     }
     if (BlueGhost.state == "kill"){
         vector<bool> intersection;
         intersection = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,13,14,BlueGhost);
-        move_entity_in_mat(map,BlueGhost);
     }
 
     if (BlueGhost.state == "hide"){
@@ -103,24 +95,22 @@ void BlueGhostMove (Entity BlueGhost,Entity PacMan, CMat map){
 //*****************************************************************************
 //******************************     Orange    ********************************
 //*****************************************************************************
-void OrangeGhostMove (Entity OrangeGhost,Entity PacMan, CMat map){
+void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
     if (OrangeGhost.state == "hunt"){
         vector<bool> intersection;
         intersection = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,OrangeGhost);
-        move_entity_in_mat(map,OrangeGhost);
+//                cout << OrangeGhost.viewdirection << endl;
     }
     if (OrangeGhost.state == "flee"){
         vector<bool> intersection;
         intersection = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,28,0,OrangeGhost);
-        move_entity_in_mat(map,OrangeGhost);
     }
     if (OrangeGhost.state == "kill"){
         vector<bool> intersection;
         intersection = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,13,14,OrangeGhost);
-        move_entity_in_mat(map,OrangeGhost);
     }
 
     if (OrangeGhost.state == "hide"){

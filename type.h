@@ -1,31 +1,19 @@
 #ifndef TYPE_H
 #define TYPE_H
-#include <vector>
+
 #include <string>
+#include <vector>
+#include <iostream>
+#include <thread>
+#include <fstream>
 #include <map>
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
-/**
- * @bried this is ghost
-*/
-/**
- * @brief RedGhostMove : blablka
- * @param RedGhost : test
- * @param PacMan : pacman
- * @param map
- */
+#include "mingl/shape/rectangle.h"
 
 
 typedef std::vector <char> CVLine;
-
 typedef std::vector <CVLine> CMat;
-
-const char KEmpty = ' ';
-const char KMur = 'X';
-
-
-typedef std::vector <char> CVLine; // ligne
-typedef std::vector <CVLine> CMat; // grille
 typedef std::pair <unsigned, unsigned> CPos;
 
 
@@ -33,10 +21,16 @@ struct Entity
 {
     char ident;
     std::map <std::string, std::vector <std::string>> SpriteMap;
+    std::string viewdirection;
     std::string state;
     CPos Pos;
-    std::string viewdirection;
 };
 
+
+const char KEmpty = ' ';
+const char KGhostDoor = '_';
+const char KWall = 'X';
+const char KGum = '*';
+const char KSuperGum = '0';
 
 #endif // TYPE_H
