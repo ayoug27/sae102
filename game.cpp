@@ -1,4 +1,4 @@
-#define FPS_LIMIT 10
+#define FPS_LIMIT 120
 #include <iostream>
 #include <thread>
 #include <fstream>
