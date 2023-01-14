@@ -84,7 +84,50 @@ void pacManDirection(MinGL & window, CMat & entityGrid, Entity & PacMan)
     if (window.isPressed({'d', false}) && checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
         PacMan.viewdirection = "Right";
 }
+void GhostMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
+{
+    if (tick%1 == 0)
+    {
+        entityGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
+        if (PacMan.viewdirection == "Top" && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second-1))
+        {
+            --PacMan.Pos.second;
+        }
+        if (PacMan.viewdirection == "Bottom" && checkCollision(entityGrid,PacMan.Pos.first,PacMan.Pos.second+1))
+        {
 
+            ++PacMan.Pos.second;
+
+        }
+        if (PacMan.viewdirection == "Left")
+        {
+            if (PacMan.Pos.first > 1)
+            {
+                if (checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
+                    --PacMan.Pos.first;
+            }
+            else
+            {
+                PacMan.Pos.first = entityGrid[1].size()-1;
+                PacMan.Pos.second = 14;
+            }
+        }
+        if (PacMan.viewdirection == "Right" && checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
+        {
+            if (PacMan.Pos.first < entityGrid.size()-5)
+            {
+                if (checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
+                    ++PacMan.Pos.first;
+            }
+            else
+            {
+                PacMan.Pos.first = 1;
+                PacMan.Pos.second = 14;
+            }
+        }
+        entityGrid[PacMan.Pos.second][PacMan.Pos.first] = PacMan.ident;
+    }
+}
 void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
 {
     if (tick%2 == 0)
@@ -102,27 +145,27 @@ void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
         }
         if (PacMan.viewdirection == "Left")
         {
-            if (PacMan.Pos.first != 0)
+            if (PacMan.Pos.first > 1)
             {
                 if (checkCollision(entityGrid,PacMan.Pos.first-1,PacMan.Pos.second))
                     --PacMan.Pos.first;
             }
             else
             {
-                PacMan.Pos.first = entityGrid.size()-3;
+                PacMan.Pos.first =  entityGrid[1].size()-1;
                 PacMan.Pos.second = 14;
             }
         }
         if (PacMan.viewdirection == "Right" && checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
         {
-            if (PacMan.Pos.first != entityGrid.size()-3)
+            if (PacMan.Pos.first < entityGrid.size()-5)
             {
                 if (checkCollision(entityGrid,PacMan.Pos.first+1,PacMan.Pos.second))
                     ++PacMan.Pos.first;
             }
             else
             {
-                PacMan.Pos.first = 0;
+                PacMan.Pos.first = 1;
                 PacMan.Pos.second = 14;
             }
         }

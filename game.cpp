@@ -90,10 +90,10 @@ void game(){
         OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
         BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
 
-        pacManMovement(entityGrid,RedGhost, tick);
-        pacManMovement(entityGrid,BlueGhost, tick);
-        pacManMovement(entityGrid,OrangeGhost, tick);
-        pacManMovement(entityGrid,PinkGhost, tick);
+        GhostMovement(entityGrid,RedGhost, tick);
+        GhostMovement(entityGrid,BlueGhost, tick);
+        GhostMovement(entityGrid,OrangeGhost, tick);
+        GhostMovement(entityGrid,PinkGhost, tick);
 
 
         window << initSprite(PacMan, entityGrid, tick);

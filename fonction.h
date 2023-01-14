@@ -12,6 +12,8 @@ nsGui::Sprite initSprite (Entity & Entity, CMat & entityGrid, unsigned short & t
 
 void pacManDirection(MinGL & window, CMat & entityGrid, Entity & PacMan);
 
+void GhostMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick);
+
 void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick);
 
 std::pair <CMat, std::map<char, CPos>> initEntityMaze (const std::string & sourceFile);
