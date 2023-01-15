@@ -1,3 +1,12 @@
+/**
+ *
+ * @file : Display.cpp
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @brief : Fonctions liés à l'affichage de l'interface.
+ *
+**/
+
 #include <iostream>
 #include <thread>
 #include <fstream>

@@ -1,3 +1,12 @@
+/**
+ *
+ * @file : Movement.cpp
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @brief : Fonctions liés au mouvement dans la matrice du PacMan et des fantômes.
+ *
+**/
+
 #include <iostream>
 #include <thread>
 #include <fstream>
