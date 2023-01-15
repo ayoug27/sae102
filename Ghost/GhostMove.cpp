@@ -59,10 +59,10 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
         if(RedGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 6;}
-        if(PacMan.viewdirection == "Right"){xp -= 6;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 8;}
-        if(PacMan.viewdirection == "Left"){xp += 7;}
+        if(PacMan.viewdirection == "Top"){yp += 26;}
+        if(PacMan.viewdirection == "Right"){xp -= 26;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 28;}
+        if(PacMan.viewdirection == "Left"){xp += 27;}
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,xp,yp,RedGhost);
     }
 }
@@ -114,10 +114,10 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
         if(PinkGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 9;}
-        if(PacMan.viewdirection == "Right"){xp -= 4;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 3;}
-        if(PacMan.viewdirection == "Left"){xp += 6;}
+        if(PacMan.viewdirection == "Top"){yp += 29;}
+        if(PacMan.viewdirection == "Right"){xp -= 24;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 23;}
+        if(PacMan.viewdirection == "Left"){xp += 26;}
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,xp,yp,PinkGhost);
 
     }
@@ -170,10 +170,10 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
         if(BlueGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 1;}
-        if(PacMan.viewdirection == "Right"){xp -= 4;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 6;}
-        if(PacMan.viewdirection == "Left"){xp += 3;}
+        if(PacMan.viewdirection == "Top"){yp += 21;}
+        if(PacMan.viewdirection == "Right"){xp -= 24;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 26;}
+        if(PacMan.viewdirection == "Left"){xp += 23;}
         MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,xp,yp,BlueGhost);
 
     }
@@ -227,10 +227,10 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         if(OrangeGhost.viewdirection == "Left"){intersection[1] = false;}
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
-        if(PacMan.viewdirection == "Top"){yp += 4;}
-        if(PacMan.viewdirection == "Right"){xp -= 7;}
-        if(PacMan.viewdirection == "Bottom"){yp -= 10;}
-        if(PacMan.viewdirection == "Left"){xp += 6;}
+        if(PacMan.viewdirection == "Top"){yp += 24;}
+        if(PacMan.viewdirection == "Right"){xp -= 27;}
+        if(PacMan.viewdirection == "Bottom"){yp -= 20;}
+        if(PacMan.viewdirection == "Left"){xp += 26;}
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,xp,yp,OrangeGhost);
 
     }
