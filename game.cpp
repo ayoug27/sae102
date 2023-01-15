@@ -65,6 +65,7 @@ void game(){
     map<char, CPos> posMap = gridInfo.second;
     CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
     int tick2 = 0;
+    unsigned dieTickAnimation = 0;
     PacMan.Pos = posMap[PacMan.ident];
     RedGhost.Pos = posMap[RedGhost.ident];
     OrangeGhost.Pos = posMap[OrangeGhost.ident];
@@ -89,16 +90,20 @@ void game(){
             ChangementNiveau(PacMan, RedGhost, OrangeGhost, PinkGhost, BlueGhost, posMap, gumGrid);
             WinRound = false;
         }
+
         if (Dead)
         {
-            window << nsGui::Sprite (PacMan.SpriteMap["Dead"][tick % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
-            if (tick % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
+            window << nsGui::Sprite (PacMan.SpriteMap["Dead"][dieTickAnimation % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
+            if (dieTickAnimation % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
             {
                 this_thread::sleep_for(chrono::milliseconds(50000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
                 reinitLevel(PacMan, RedGhost, PinkGhost, OrangeGhost, BlueGhost, posMap);
                 Dead = false;
+                dieTickAnimation = 0;
                 --vies;
             }
+            else
+                ++dieTickAnimation;
         }
         else {
             showGumInMaze(window,gumGrid,NbGum);
@@ -118,7 +123,7 @@ void game(){
 
             }
 
-            gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
+            gumEating(PacMan,gumGrid, NbGum, score);//*************************************************************************
             if (peutmanger == false){
                 Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
             }
@@ -151,22 +156,22 @@ void game(){
                 OrangeGhost.state = "Hide";
 
                 if (PacMan.Pos == RedGhost.Pos){
-                    score += 100;
+                    score += 200;
                     RedGhost.Pos.first = 13;
                     RedGhost.Pos.second = 11;
                 }
                 if( PacMan.Pos == PinkGhost.Pos){
-                    score += 100;
+                    score += 200;
                     PinkGhost.Pos.first = 13;
                     PinkGhost.Pos.second = 11;
                 }
                 if(PacMan.Pos == BlueGhost.Pos){
-                    score += 100;
+                    score += 200;
                     BlueGhost.Pos.first = 13;
                     BlueGhost.Pos.second = 11;
                 }
                 if (PacMan.Pos == OrangeGhost.Pos){
-                    score += 100;
+                    score += 200;
                     OrangeGhost.Pos.first = 13;
                     OrangeGhost.Pos.second = 11;
                 }
