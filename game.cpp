@@ -111,8 +111,9 @@ void game(){
             }
 
             gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
+            if (peutmanger == false){
             Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
-
+            }
             if (peutmanger == true && tick2 == 0){
                 tick2 = 150;
             }
