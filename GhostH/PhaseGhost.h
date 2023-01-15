@@ -10,5 +10,4 @@ void Phase (std::vector<bool> VecPhase, unsigned short tick,
                     Entity & entity);
 
 
-
 #endif // PHASEGHOST_H

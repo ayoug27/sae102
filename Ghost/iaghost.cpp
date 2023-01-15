@@ -1,6 +1,3 @@
-//*****************************************************************************
-//*************************     Initialisation     ****************************
-//*****************************************************************************
 #include <iostream>
 #include <thread>
 #include <fstream>
@@ -14,9 +11,6 @@
 using namespace std;
 
 
-//*****************************************************************************
-//*****************************     nbsortie     ******************************
-//*****************************************************************************
 vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
     vector<bool> sortie = {false,false,false,false};
 
@@ -51,9 +45,6 @@ vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
     return sortie;
 }
 
-//*****************************************************************************
-//***********************    calcule distance     *****************************
-//*****************************************************************************
 vector <float> CalculeDistance (vector<bool> sortie,unsigned yg , unsigned xg,
                                 unsigned yp , unsigned xp){
 
@@ -76,9 +67,7 @@ vector <float> CalculeDistance (vector<bool> sortie,unsigned yg , unsigned xg,
     }
     return distance;
 }
-//*****************************************************************************
-//***********************    calcule distance     *****************************
-//*****************************************************************************
+
 unsigned TrouveIndiceMinDanstab (vector<float> Vec){
     unsigned imin = 0;
     unsigned Vecmin = Vec[0];
@@ -91,9 +80,6 @@ unsigned TrouveIndiceMinDanstab (vector<float> Vec){
     return imin;
 }
 
-//*****************************************************************************
-//**************************    déplacement     *******************************
-//*****************************************************************************
 void MOVE(vector<bool> sortie,unsigned yg , unsigned xg,
                           unsigned yp , unsigned xp, Entity & entity)
 {

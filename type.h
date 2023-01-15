@@ -25,7 +25,6 @@ struct Entity
     std::string viewdirection;
     std::string state;
     CPos Pos;
-    std::string oldposs;
 };
 
 

@@ -1,6 +1,3 @@
-//*****************************************************************************
-//*************************     Initialisation     ****************************
-//*****************************************************************************
 #include <iostream>
 #include <thread>
 #include <fstream>
@@ -28,9 +25,7 @@ vector<bool> DemiTour(vector<bool>  Sorties, Entity entity){
     return Sorties;
 }
 
-//*****************************************************************************
-//******************************     RED     **********************************
-//*****************************************************************************
+
 void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
     if (RedGhost.state == "Hunt"){
         vector<bool> Sorties;
@@ -64,9 +59,6 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
     }
 }
 
-//*****************************************************************************
-//******************************     Pink     *********************************
-//*****************************************************************************
 void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
     if (PinkGhost.state == "Hunt"){
         vector<bool> Sorties;
@@ -108,9 +100,6 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
     }
 }
 
-//*****************************************************************************
-//******************************     Blue     *********************************
-//*****************************************************************************
 void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     if (BlueGhost.state == "Hunt"){
         vector<bool> Sorties;
@@ -152,9 +141,6 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     }
 }
 
-//*****************************************************************************
-//******************************     Orange    ********************************
-//*****************************************************************************
 void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
     if (OrangeGhost.state == "Hunt"){
         vector<bool> Sorties;
