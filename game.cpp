@@ -87,6 +87,7 @@ void game(){
         if (WinRound == true) {
             this_thread::sleep_for(chrono::milliseconds(500000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
             ChangementNiveau(PacMan, RedGhost, OrangeGhost, PinkGhost, BlueGhost, posMap, gumGrid);
+            WinRound = false;
         }
         if (Dead)
         {
