@@ -219,26 +219,35 @@ CMat initGumMaze(const string & sourceFile)
     return mat_maze;
 }
 
-void showGumInMaze(MinGL & window, const CMat & gumGrid)
+void showGumInMaze(MinGL & window, const CMat & gumGrid, unsigned & NbGum)
 {
+    NbGum = 0;
     for (unsigned y = 0; y < gumGrid.size(); ++y)
-            {
-                for (unsigned x = 0; x < gumGrid[y].size(); ++x)
-                {
-                    if (gumGrid[y][x] == KGum)
-                        window << nsShape::Rectangle(nsGraphics::Vec2D(24*x+9, 24*y+9), nsGraphics::Vec2D(24*x+15, 24*y+15), nsGraphics::KWhite);
-                    if (gumGrid[y][x] == KSuperGum)
-                        window << nsGui::Sprite ("../sae102/res/sprites/supergum.si2", nsGraphics::Vec2D(24*x,24*y));
-                }
+    {
+        for (unsigned x = 0; x < gumGrid[y].size(); ++x)
+        {
+            if (gumGrid[y][x] == KGum){
+                window << nsShape::Rectangle(nsGraphics::Vec2D(24*x+9, 24*y+9), nsGraphics::Vec2D(24*x+15, 24*y+15), nsGraphics::KWhite);
+                NbGum +=1;
             }
+            if (gumGrid[y][x] == KSuperGum){
+                window << nsGui::Sprite ("../sae102/res/sprites/supergum.si2", nsGraphics::Vec2D(24*x,24*y));
+                NbGum +=1;
+            }
+        }
+    }
 }
 
-void gumEating(Entity PacMan, CMat & gumGrid)
+void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum)
 {
-    if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KGum)
+    if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
-    if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum)
+        NbGum -=1;
+    }
+    if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
+        NbGum -=1;
+    }
 }
 
 void move_entity_in_mat(CMat Mat, Entity entity){
@@ -279,4 +288,46 @@ void move_entity_in_mat(CMat Mat, Entity entity){
             }
         }
     }
+}
+
+void ChangementNiveau(Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, map<char, CPos> posMap, CMat & gumGrid){
+    PacMan.viewdirection = "Left";
+    PacMan.Pos = posMap[PacMan.ident];
+    Ghost1.state = "flee";
+    Ghost1.viewdirection = "Left";
+    Ghost1.Pos = posMap[Ghost1.ident];
+    Ghost2.state = "flee";
+    Ghost2.viewdirection = "Top";
+    Ghost2.Pos = posMap[Ghost2.ident];
+    Ghost3.state = "flee";
+    Ghost3.viewdirection = "Bottom";
+    Ghost3.Pos = posMap[Ghost3.ident];
+    Ghost4.state = "flee";
+    Ghost4.viewdirection = "Bottom";
+    Ghost4.Pos = posMap[Ghost4.ident];
+
+    gumGrid = initGumMaze("../sae102/res/guminitialmap");
+}
+
+bool isDead (Entity & PacMan, Entity Ghost1, Entity Ghost2, Entity Ghost3, Entity Ghost4)
+{
+    return (PacMan.Pos == Ghost1.Pos || PacMan.Pos == Ghost2.Pos || PacMan.Pos == Ghost3.Pos || PacMan.Pos == Ghost4.Pos);
+}
+
+void reinitLevel (Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, map<char, CPos> posMap)
+{
+    PacMan.viewdirection = "Left";
+    PacMan.Pos = posMap[PacMan.ident];
+    Ghost1.state = "flee";
+    Ghost1.viewdirection = "Left";
+    Ghost1.Pos = posMap[Ghost1.ident];
+    Ghost2.state = "flee";
+    Ghost2.viewdirection = "Top";
+    Ghost2.Pos = posMap[Ghost2.ident];
+    Ghost3.state = "flee";
+    Ghost3.viewdirection = "Bottom";
+    Ghost3.Pos = posMap[Ghost3.ident];
+    Ghost4.state = "flee";
+    Ghost4.viewdirection = "Bottom";
+    Ghost4.Pos = posMap[Ghost4.ident];
 }

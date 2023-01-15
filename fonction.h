@@ -20,10 +20,16 @@ std::pair <CMat, std::map<char, CPos>> initEntityMaze (const std::string & sourc
 
 CMat initGumMaze(const std::string & sourceFile);
 
-void showGumInMaze(MinGL & window, const CMat & gumGrid);
+void showGumInMaze(MinGL & window, const CMat & gumGrid, unsigned & NbGum);
 
-void gumEating(Entity PacMan, CMat & gumGrid);
+void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum);
 
 void move_entity_in_mat(CMat Mat, Entity entity);
+
+void ChangementNiveau(Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, std::map<char, CPos> posMap, CMat & gumGrid);
+
+bool isDead (Entity & PacMan, Entity Ghost1, Entity Ghost2, Entity Ghost3, Entity Ghost4);
+
+void reinitLevel (Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, std::map<char, CPos> posMap);
 
 #endif // FONCTION_H

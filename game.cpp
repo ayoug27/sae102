@@ -39,7 +39,7 @@ void game(){
 
     bool peutmanger = false;
 
-    PacMan.viewdirection = "Top";
+    PacMan.viewdirection = "Left";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     RedGhost.state = "flee";
@@ -59,6 +59,8 @@ void game(){
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
     bool test = false;
+    bool WinRound = false;
+    bool Dead = false;
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
     CMat entityGrid = gridInfo.first;
     map<char, CPos> posMap = gridInfo.second;
@@ -82,92 +84,116 @@ void game(){
         window.clearScreen();
 
         window << maze; //afficher le labyrinthe à chaque fois fait bugger le programme
-
-        showGumInMaze(window,gumGrid);
-        pacManDirection(window, entityGrid, PacMan);
-        pacManMovement(entityGrid, PacMan, tick);
-
-        if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
-            peutmanger = true;
-            test = true;
+        unsigned NbGum;
+        if (WinRound == true) {
+            this_thread::sleep_for(chrono::milliseconds(500000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+            ChangementNiveau(PacMan, RedGhost, OrangeGhost, PinkGhost, BlueGhost, posMap, gumGrid);
         }
-
-        gumEating(PacMan,gumGrid);//*************************************************************************
-
-        if (peutmanger == true && tick2 == 0){
-            tick2 = 150;
-        }
-        if (peutmanger == true && tick2 != 0){
-            tick2 -= 1;
-        }
-        if (peutmanger == true && tick2 == 1){
-            peutmanger = false;
-        }
-
-        Phase(phase,tick,RedGhost);
-        Phase(phase,tick,PinkGhost);
-        Phase(phase,tick,OrangeGhost);
-        Phase(phase,tick,BlueGhost);
-
-
-        if (peutmanger == true)
+        if (Dead)
         {
-
-           RedGhost.state = "hide";
-           PinkGhost.state = "hide";
-           BlueGhost.state = "hide";
-           OrangeGhost.state = "hide";
-
-           if (PacMan.Pos == RedGhost.Pos){
-            RedGhost.Pos.first = 13;
-            RedGhost.Pos.second = 11;
-               }
-               if( PacMan.Pos == PinkGhost.Pos){
-            PinkGhost.Pos.first = 13;
-            PinkGhost.Pos.second = 11;
-               }
-               if(PacMan.Pos == BlueGhost.Pos){
-            BlueGhost.Pos.first = 13;
-            BlueGhost.Pos.second = 11;
-               }
-               if (PacMan.Pos == OrangeGhost.Pos){
-            OrangeGhost.Pos.first = 13;
-            OrangeGhost.Pos.second = 11;
-           }
+            window << nsGui::Sprite (PacMan.SpriteMap["Dead"][tick % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
+            if (tick % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
+            {
+                this_thread::sleep_for(chrono::milliseconds(50000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+                reinitLevel(PacMan, RedGhost, PinkGhost, OrangeGhost, BlueGhost, posMap);
+                Dead = false;
+                --vies;
+            }
         }
-        if (tick%2 == 0){
-        RedGhostMove(RedGhost,PacMan,gridInfo.first);
-        PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
-        OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
-        BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
+        else {
+            showGumInMaze(window,gumGrid,NbGum);
+            pacManDirection(window, entityGrid, PacMan);
+            pacManMovement(entityGrid, PacMan, tick);
 
-        GhostMovement(entityGrid,RedGhost, tick);
-        GhostMovement(entityGrid,BlueGhost, tick);
-        GhostMovement(entityGrid,OrangeGhost, tick);
-        GhostMovement(entityGrid,PinkGhost, tick);
+            if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
+                peutmanger = true;
+                test = true;
+            }
+
+            gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
+            Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
+
+            if (peutmanger == true && tick2 == 0){
+                tick2 = 150;
+            }
+            if (peutmanger == true && tick2 != 0){
+                tick2 -= 1;
+            }
+            if (peutmanger == true && tick2 == 1){
+                peutmanger = false;
+            }
+
+            Phase(phase,tick,RedGhost);
+            Phase(phase,tick,PinkGhost);
+            Phase(phase,tick,OrangeGhost);
+            Phase(phase,tick,BlueGhost);
+
+
+            if (peutmanger == true)
+            {
+
+                RedGhost.state = "hide";
+                PinkGhost.state = "hide";
+                BlueGhost.state = "hide";
+                OrangeGhost.state = "hide";
+
+                if (PacMan.Pos == RedGhost.Pos){
+                    RedGhost.Pos.first = 13;
+                    RedGhost.Pos.second = 11;
+                }
+                if( PacMan.Pos == PinkGhost.Pos){
+                    PinkGhost.Pos.first = 13;
+                    PinkGhost.Pos.second = 11;
+                }
+                if(PacMan.Pos == BlueGhost.Pos){
+                    BlueGhost.Pos.first = 13;
+                    BlueGhost.Pos.second = 11;
+                }
+                if (PacMan.Pos == OrangeGhost.Pos){
+                    OrangeGhost.Pos.first = 13;
+                    OrangeGhost.Pos.second = 11;
+                }
+            }
+            if (tick%2 == 0){
+                RedGhostMove(RedGhost,PacMan,gridInfo.first);
+                PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
+                OrangeGhostMove(OrangeGhost,PacMan,gridInfo.first);
+                BlueGhostMove(BlueGhost,PacMan,gridInfo.first);
+
+                GhostMovement(entityGrid,RedGhost, tick);
+                GhostMovement(entityGrid,BlueGhost, tick);
+                GhostMovement(entityGrid,OrangeGhost, tick);
+                GhostMovement(entityGrid,PinkGhost, tick);
+            }
+
+            window << initSprite(PacMan, entityGrid, tick);
+            window << initSprite(RedGhost, entityGrid, tick);
+            window << initSprite(BlueGhost, entityGrid, tick);
+            window << initSprite(OrangeGhost, entityGrid, tick);
+            window << initSprite(PinkGhost, entityGrid, tick);
+
+            affichageScore(window, score);
+            affichageVies(PacMan.SpriteMap, window, vies);
+            affichageNiveau(window, niveau);
         }
-
-        window << initSprite(PacMan, entityGrid, tick);
-        window << initSprite(RedGhost, entityGrid, tick);
-        window << initSprite(BlueGhost, entityGrid, tick);
-        window << initSprite(OrangeGhost, entityGrid, tick);
-        window << initSprite(PinkGhost, entityGrid, tick);
-
-        affichageScore(window, score);
-        affichageVies(PacMan.SpriteMap, window, vies);
-        affichageNiveau(window, niveau);
         //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
-//        for (unsigned y = 0; y < entityGrid.size(); ++y)
-//                {
-//                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
-//                    {
-//                        cout << entityGrid[y][x];
-//                    }
-//                    cout << endl;
-//                }
+        //        for (unsigned y = 0; y < entityGrid.size(); ++y)
+        //                {
+        //                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
+        //                    {
+        //                        cout << entityGrid[y][x];
+        //                    }
+        //                    cout << endl;
+        //                }
         //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;
+        if (NbGum == 0){
+            affichageNiveauGagne(window);
+            niveau +=1;
+            tick = 0;
+            WinRound = true;
+        }
 
         // On finit la frame en cours
         window.finishFrame();

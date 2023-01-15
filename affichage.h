@@ -8,4 +8,6 @@ void affichageVies(std::map <std::string, std::vector <std::string>> & PacManSpr
 
 void affichageNiveau(MinGL & window, unsigned & niveau);
 
+void affichageNiveauGagne(MinGL & window);
+
 #endif // AFFICHAGE_H
