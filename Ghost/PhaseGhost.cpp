@@ -19,37 +19,37 @@ void Phase (vector<bool> VecPhase, unsigned short tick,
 
     if (tick == 125 && VecPhase[0] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "hunt";}
+        if (not(entity.state == "Hide")){entity.state = "Hunt";}
         VecPhase[0] = true;
     }
     if (tick == 675 && VecPhase[1] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "flee";}
+        if (not(entity.state == "Hide")){entity.state = "Flee";}
         VecPhase[1] = true;
     }
     if (tick == 850 && VecPhase[2] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "hunt";}
+        if (not(entity.state == "Hide")){entity.state = "Hunt";}
         VecPhase[2] = true;
     }
     if (tick == 1350 && VecPhase[3] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "flee";}
+        if (not(entity.state == "Hide")){entity.state = "Flee";}
         VecPhase[3] = true;
     }
     if (tick == 1475 && VecPhase[4] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "hunt";}
+        if (not(entity.state == "Hide")){entity.state = "Hunt";}
         VecPhase[4] = true;
     }
     if (tick == 1975 && VecPhase[5] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "flee";}
+        if (not(entity.state == "Hide")){entity.state = "Flee";}
         VecPhase[5] = true;
     }
     if (tick == 2100 && VecPhase[6] == false)
     {
-        if (not(entity.state == "hide")){entity.state = "hunt";}
+        if (not(entity.state == "Hide")){entity.state = "Hunt";}
         VecPhase[6] = true;
     }
 }

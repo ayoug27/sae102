@@ -42,19 +42,19 @@ void game(){
     PacMan.viewdirection = "Left";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
-    RedGhost.state = "flee";
+    RedGhost.state = "Flee";
     RedGhost.viewdirection = "Left";
     RedGhost.ident = 'R';
     RedGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/redghost/spriteMap");
-    OrangeGhost.state = "flee";
+    OrangeGhost.state = "Flee";
     OrangeGhost.viewdirection = "Top";
     OrangeGhost.ident = 'O';
     OrangeGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/orangeghost/spriteMap");
-    PinkGhost.state = "flee";
+    PinkGhost.state = "Flee";
     PinkGhost.viewdirection = "Bottom";
     PinkGhost.ident = 'K';
     PinkGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/pinkghost/spriteMap");
-    BlueGhost.state = "flee";
+    BlueGhost.state = "Flee";
     BlueGhost.viewdirection = "Bottom";
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
@@ -124,10 +124,10 @@ void game(){
             }
             if (peutmanger == true && tick2 == 1){
                 peutmanger = false;
-                RedGhost.state = "hunt";
-                PinkGhost.state = "hunt";
-                BlueGhost.state = "hunt";
-                OrangeGhost.state = "hunt";
+                RedGhost.state = "Hunt";
+                PinkGhost.state = "Hunt";
+                BlueGhost.state = "Hunt";
+                OrangeGhost.state = "Hunt";
             }
 
             Phase(phase,tick,RedGhost);

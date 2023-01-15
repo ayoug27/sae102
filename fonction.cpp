@@ -295,16 +295,16 @@ void move_entity_in_mat(CMat Mat, Entity entity){
 void ChangementNiveau(Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, map<char, CPos> posMap, CMat & gumGrid){
     PacMan.viewdirection = "Left";
     PacMan.Pos = posMap[PacMan.ident];
-    Ghost1.state = "flee";
+    Ghost1.state = "Flee";
     Ghost1.viewdirection = "Left";
     Ghost1.Pos = posMap[Ghost1.ident];
-    Ghost2.state = "flee";
+    Ghost2.state = "Flee";
     Ghost2.viewdirection = "Top";
     Ghost2.Pos = posMap[Ghost2.ident];
-    Ghost3.state = "flee";
+    Ghost3.state = "Flee";
     Ghost3.viewdirection = "Bottom";
     Ghost3.Pos = posMap[Ghost3.ident];
-    Ghost4.state = "flee";
+    Ghost4.state = "Flee";
     Ghost4.viewdirection = "Bottom";
     Ghost4.Pos = posMap[Ghost4.ident];
 
@@ -320,16 +320,16 @@ void reinitLevel (Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Gh
 {
     PacMan.viewdirection = "Left";
     PacMan.Pos = posMap[PacMan.ident];
-    Ghost1.state = "flee";
+    Ghost1.state = "Flee";
     Ghost1.viewdirection = "Left";
     Ghost1.Pos = posMap[Ghost1.ident];
-    Ghost2.state = "flee";
+    Ghost2.state = "Flee";
     Ghost2.viewdirection = "Top";
     Ghost2.Pos = posMap[Ghost2.ident];
-    Ghost3.state = "flee";
+    Ghost3.state = "Flee";
     Ghost3.viewdirection = "Bottom";
     Ghost3.Pos = posMap[Ghost3.ident];
-    Ghost4.state = "flee";
+    Ghost4.state = "Flee";
     Ghost4.viewdirection = "Bottom";
     Ghost4.Pos = posMap[Ghost4.ident];
 }
