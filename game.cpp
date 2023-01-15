@@ -11,14 +11,20 @@
 #include "GhostH/GhostMove.h"
 #include "GhostH/iaghost.h"
 #include "GhostH/PhaseGhost.h"
+#include "affichage.h"
 
 
 using namespace std;
 
 
 void game(){
+
+    unsigned score = 0;
+    unsigned niveau = 1;
+    unsigned vies = 3;
+
     // Initialise le système
-    MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 744), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
+    MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 790), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
     window.initGraphic();
 
@@ -31,7 +37,9 @@ void game(){
     Entity PinkGhost;
     Entity BlueGhost;
 
-    PacMan.viewdirection = "Left";
+    bool peutmanger = false;
+
+    PacMan.viewdirection = "Top";
     PacMan.ident = 'P';
     PacMan.SpriteMap = initSpriteMap("../sae102/res/sprites/pacman/spriteMap");
     RedGhost.state = "flee";
@@ -50,12 +58,12 @@ void game(){
     BlueGhost.viewdirection = "Bottom";
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
-
+    bool test = false;
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
     CMat entityGrid = gridInfo.first;
     map<char, CPos> posMap = gridInfo.second;
     CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
-
+    int tick2 = 0;
     PacMan.Pos = posMap[PacMan.ident];
     RedGhost.Pos = posMap[RedGhost.ident];
     OrangeGhost.Pos = posMap[OrangeGhost.ident];
@@ -66,6 +74,7 @@ void game(){
     //     On fait tourner la boucle tant que la fenêtre est ouverte
     for (unsigned short tick = 0; window.isOpen(); ++tick)
     {
+
         // Récupère l'heure actuelle
         chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
 
@@ -77,13 +86,55 @@ void game(){
         showGumInMaze(window,gumGrid);
         pacManDirection(window, entityGrid, PacMan);
         pacManMovement(entityGrid, PacMan, tick);
-        gumEating(PacMan,gumGrid);
+
+        if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
+            peutmanger = true;
+            test = true;
+        }
+
+        gumEating(PacMan,gumGrid);//*************************************************************************
+
+        if (peutmanger == true && tick2 == 0){
+            tick2 = 150;
+        }
+        if (peutmanger == true && tick2 != 0){
+            tick2 -= 1;
+        }
+        if (peutmanger == true && tick2 == 1){
+            peutmanger = false;
+        }
 
         Phase(phase,tick,RedGhost);
         Phase(phase,tick,PinkGhost);
         Phase(phase,tick,OrangeGhost);
         Phase(phase,tick,BlueGhost);
 
+
+        if (peutmanger == true)
+        {
+
+           RedGhost.state = "hide";
+           PinkGhost.state = "hide";
+           BlueGhost.state = "hide";
+           OrangeGhost.state = "hide";
+
+           if (PacMan.Pos == RedGhost.Pos){
+            RedGhost.Pos.first = 13;
+            RedGhost.Pos.second = 11;
+               }
+               if( PacMan.Pos == PinkGhost.Pos){
+            PinkGhost.Pos.first = 13;
+            PinkGhost.Pos.second = 11;
+               }
+               if(PacMan.Pos == BlueGhost.Pos){
+            BlueGhost.Pos.first = 13;
+            BlueGhost.Pos.second = 11;
+               }
+               if (PacMan.Pos == OrangeGhost.Pos){
+            OrangeGhost.Pos.first = 13;
+            OrangeGhost.Pos.second = 11;
+           }
+        }
         if (tick%2 == 0){
         RedGhostMove(RedGhost,PacMan,gridInfo.first);
         PinkGhostMove(PinkGhost,PacMan,gridInfo.first);
@@ -95,21 +146,25 @@ void game(){
         GhostMovement(entityGrid,OrangeGhost, tick);
         GhostMovement(entityGrid,PinkGhost, tick);
         }
+
         window << initSprite(PacMan, entityGrid, tick);
         window << initSprite(RedGhost, entityGrid, tick);
         window << initSprite(BlueGhost, entityGrid, tick);
         window << initSprite(OrangeGhost, entityGrid, tick);
         window << initSprite(PinkGhost, entityGrid, tick);
 
+        affichageScore(window, score);
+        affichageVies(PacMan.SpriteMap, window, vies);
+        affichageNiveau(window, niveau);
         //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
-        for (unsigned y = 0; y < entityGrid.size(); ++y)
-                {
-                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
-                    {
-                        cout << entityGrid[y][x];
-                    }
-                    cout << endl;
-                }
+//        for (unsigned y = 0; y < entityGrid.size(); ++y)
+//                {
+//                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
+//                    {
+//                        cout << entityGrid[y][x];
+//                    }
+//                    cout << endl;
+//                }
         //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;
