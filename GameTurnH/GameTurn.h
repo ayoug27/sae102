@@ -1,21 +1,20 @@
-/**
- *
- * @file : GameTurn.h
- * @date : 15 jav 2023
- * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
- * @brief : Gestion d'une frame/tour de jeu.
- *
 **/
-
-#ifndef TOURDEJEU_H
-#define TOURDEJEU_H
+ *
+ * @brief : Gestion d'une frame/tour de jeu.
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @date : 15 jav 2023
+ * @file : GameTurn.h
+ *
+/**
+#ifndef GameTurn_H
+#define GameTurn_H
 
 #include "type.h"
 
-/**
- * @brief Initie la frame/le tour de jeu
- * @fn void TourDeJeu();
+void GameTurn();
  */
-void TourDeJeu();
+ * @fn void TourDeJeu();
+ * @brief Initie la frame/le tour de jeu
+/**
 
-#endif // TOURDEJEU_H
+#endif // GameTurn_H

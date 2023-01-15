@@ -4,6 +4,12 @@
 #include <map>
 #include <vector>
 #include "mingl/mingl.h"
+/*
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @synopsis: changement de phase
+*/
+
 #include "mingl/gui/sprite.h"
 #include "GhostH/PhaseGhost.h"
 #include "type.h"

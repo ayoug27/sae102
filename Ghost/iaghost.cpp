@@ -1,3 +1,10 @@
+/**
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @synop: déplacement des fantomes dans la matrice recherche du meilleur chemin
+*/
+
+
 #include <iostream>
 #include <thread>
 #include <fstream>
