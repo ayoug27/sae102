@@ -58,7 +58,6 @@ void game(){
     BlueGhost.viewdirection = "Bottom";
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
-    bool test = false;
     bool WinRound = false;
     bool Dead = false;
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
@@ -88,6 +87,7 @@ void game(){
         if (WinRound == true) {
             this_thread::sleep_for(chrono::milliseconds(500000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
             ChangementNiveau(PacMan, RedGhost, OrangeGhost, PinkGhost, BlueGhost, posMap, gumGrid);
+            WinRound = false;
         }
         if (Dead)
         {
@@ -107,7 +107,6 @@ void game(){
 
             if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
                 peutmanger = true;
-                test = true;
             }
 
             gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
@@ -139,18 +138,22 @@ void game(){
                 OrangeGhost.state = "hide";
 
                 if (PacMan.Pos == RedGhost.Pos){
+                    score += 100;
                     RedGhost.Pos.first = 13;
                     RedGhost.Pos.second = 11;
                 }
                 if( PacMan.Pos == PinkGhost.Pos){
+                    score += 100;
                     PinkGhost.Pos.first = 13;
                     PinkGhost.Pos.second = 11;
                 }
                 if(PacMan.Pos == BlueGhost.Pos){
+                    score += 100;
                     BlueGhost.Pos.first = 13;
                     BlueGhost.Pos.second = 11;
                 }
                 if (PacMan.Pos == OrangeGhost.Pos){
+                    score += 100;
                     OrangeGhost.Pos.first = 13;
                     OrangeGhost.Pos.second = 11;
                 }
