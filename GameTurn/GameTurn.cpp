@@ -17,7 +17,7 @@
 #include "mingl/gui/sprite.h"
 #include "mingl/shape/rectangle.h"
 #include "type.h"
-#include "MiskH/Misk.h"
+#include "MiscH/Misc.h"
 #include "GhostH/GhostMove.h"
 #include "GhostH/iaghost.h"
 #include "GhostH/PhaseGhost.h"
@@ -29,7 +29,7 @@
 using namespace std;
 
 
-void TourDeJeu(){
+void GameTurn(){
 
     unsigned score = 0;
     unsigned niveau = 1;

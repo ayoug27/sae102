@@ -1,3 +1,9 @@
+/**
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @synopsis: déplacement des fantomes 1 par 1
+*/
+
 #include <iostream>
 #include <thread>
 #include <fstream>

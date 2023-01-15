@@ -25,6 +25,6 @@ HEADERS += \
     GhostH/iaghost.h \
     GameTurnH/GameTurn.h \
     InitialisationH/Initialisation.h \
-    MiskH/Misk.h \
+    MiscH/Misc.h \
     MovementH/Movement.h \
     type.h

@@ -15,7 +15,7 @@
 #include "mingl/gui/sprite.h"
 #include "mingl/shape/rectangle.h"
 #include "type.h"
-#include "MiskH/Misk.h"
+#include "MiscH/Misc.h"
 #include "MovementH/Movement.h"
 
 using namespace std;
