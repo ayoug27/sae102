@@ -132,10 +132,10 @@ void game(){
             if (peutmanger == true)
             {
 
-                RedGhost.state = "hide";
-                PinkGhost.state = "hide";
-                BlueGhost.state = "hide";
-                OrangeGhost.state = "hide";
+                RedGhost.state = "Hide";
+                PinkGhost.state = "Hide";
+                BlueGhost.state = "Hide";
+                OrangeGhost.state = "Hide";
 
                 if (PacMan.Pos == RedGhost.Pos){
                     score += 100;

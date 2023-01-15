@@ -40,6 +40,8 @@ map <string, vector <string>> initSpriteMap (const string & sourceFile)
 
 nsGui::Sprite initSprite (Entity & Entity, CMat & entityGrid, unsigned short & tick)
 {
+    if (Entity.state == "Hide")
+        return nsGui::Sprite (Entity.SpriteMap[Entity.state][tick % Entity.SpriteMap[Entity.state].size()], nsGraphics::Vec2D(24*Entity.Pos.first-12,24*Entity.Pos.second-12));
     if (Entity.Pos.first == 0 || Entity.Pos.first == entityGrid.size()-3)
         return nsGui::Sprite (Entity.SpriteMap[Entity.viewdirection][tick % Entity.SpriteMap[Entity.viewdirection].size()], nsGraphics::Vec2D(24*Entity.Pos.first-12,24*Entity.Pos.second-12));
     if (Entity.viewdirection == "Top")
