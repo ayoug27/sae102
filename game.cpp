@@ -107,6 +107,9 @@ void game(){
 
             if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
                 peutmanger = true;
+                if(tick2 != 0){
+                    tick2 = 150;
+                }
             }
 
             gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
