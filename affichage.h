@@ -10,4 +10,6 @@ void affichageNiveau(MinGL & window, unsigned & niveau);
 
 void affichageNiveauGagne(MinGL & window);
 
+//void affichageGameOver(MinGL & window);
+
 #endif // AFFICHAGE_H

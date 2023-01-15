@@ -12,6 +12,7 @@
 #include "mingl/shape/rectangle.h"
 
 
+
 typedef std::vector <char> CVLine;
 typedef std::vector <CVLine> CMat;
 typedef std::pair <unsigned, unsigned> CPos;

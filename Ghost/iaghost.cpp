@@ -56,10 +56,7 @@ vector<bool> nbsortie(unsigned y , unsigned x, CMat map){
 //*****************************************************************************
 vector <float> CalculeDistance (vector<bool> sortie,unsigned yg , unsigned xg,
                                 unsigned yp , unsigned xp){
-//        for (unsigned i = 1;i < sortie.size(); ++i){
-//            cout << sortie[i] << " ";
-//        }
-//        cout << endl;
+
     vector<float> distance ={1000000,1100000,1000000,1000000};
     for(unsigned i = 0;i < sortie.size();++i){
         if (sortie[i] == true){
@@ -83,14 +80,10 @@ vector <float> CalculeDistance (vector<bool> sortie,unsigned yg , unsigned xg,
 //***********************    calcule distance     *****************************
 //*****************************************************************************
 unsigned TrouveIndiceMinDanstab (vector<float> Vec){
-//    for (unsigned i = 1;i < Vec.size(); ++i){
-//        cout << Vec[i] << endl;
-//    }
     unsigned imin = 0;
     unsigned Vecmin = Vec[0];
     for (unsigned i = 1;i < Vec.size(); ++i){
         if(Vec[i] < Vecmin){
-//            cout << Vec[i] << "   " << Vecmin << endl;
             Vecmin = Vec[i];
             imin = i;
         }
@@ -105,9 +98,6 @@ void MOVE(vector<bool> sortie,unsigned yg , unsigned xg,
                           unsigned yp , unsigned xp, Entity & entity)
 {
     vector<float> distance = CalculeDistance(sortie,yg,xg,yp,xp);
-//    for (unsigned i = 1;i < distance.size(); ++i){
-//        cout << distance[i] << endl;
-//    }
     unsigned imin = TrouveIndiceMinDanstab(distance);
     if(imin == 0){entity.viewdirection = "Top";}
     if(imin == 1){entity.viewdirection = "Right";}

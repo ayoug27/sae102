@@ -240,15 +240,17 @@ void showGumInMaze(MinGL & window, const CMat & gumGrid, unsigned & NbGum)
     }
 }
 
-void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum)
+void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score)
 {
     if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
         NbGum -=1;
+        score += 10;
     }
     if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
         NbGum -=1;
+        score += 50;
     }
 }
 

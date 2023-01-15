@@ -20,6 +20,13 @@
 using namespace std;
 
 
+vector<bool> DemiTour(vector<bool>  Sorties, Entity entity){
+    if(entity.viewdirection == "Top"){Sorties[2] = false;}
+    if(entity.viewdirection == "Right"){Sorties[3] = false;}
+    if(entity.viewdirection == "Bottom"){Sorties[0] = false;}
+    if(entity.viewdirection == "Left"){Sorties[1] = false;}
+    return Sorties;
+}
 
 //*****************************************************************************
 //******************************     RED     **********************************
@@ -28,37 +35,25 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
     if (RedGhost.state == "Hunt"){
         vector<bool> Sorties;
         Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        if(RedGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(RedGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(RedGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(RedGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,RedGhost);
         MOVE(Sorties,RedGhost.Pos.second,RedGhost.Pos.first,PacMan.Pos.second,PacMan.Pos.first,RedGhost);
     }
     if (RedGhost.state == "Flee"){
         vector<bool> Sorties;
         Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        if(RedGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(RedGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(RedGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(RedGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,RedGhost);
         MOVE(Sorties,RedGhost.Pos.second,RedGhost.Pos.first,0,0,RedGhost);
     }
     if (RedGhost.state == "Kill"){
         vector<bool> Sorties;
         Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        if(RedGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(RedGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(RedGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(RedGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,RedGhost);
         MOVE(Sorties,RedGhost.Pos.second,RedGhost.Pos.first,13,14,RedGhost);
     }
     if (RedGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        if(RedGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(RedGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(RedGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(RedGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,RedGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 26;}
@@ -76,10 +71,7 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
     if (PinkGhost.state == "Hunt"){
         vector<bool> Sorties;
         Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
-        if(PinkGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(PinkGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(PinkGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(PinkGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,PinkGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 4;}
@@ -91,29 +83,20 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
     if (PinkGhost.state == "Flee"){
         vector<bool> Sorties;
         Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
-        if(PinkGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(PinkGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(PinkGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(PinkGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,PinkGhost);
         MOVE(Sorties,PinkGhost.Pos.second,PinkGhost.Pos.first,28,0,PinkGhost);
     }
     if (PinkGhost.state == "Kill"){
         vector<bool> Sorties;
         Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
-        if(PinkGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(PinkGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(PinkGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(PinkGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,PinkGhost);
         MOVE(Sorties,PinkGhost.Pos.second,PinkGhost.Pos.first,13,14,PinkGhost);
     }
 
     if (PinkGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
-        if(PinkGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(PinkGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(PinkGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(PinkGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,PinkGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 29;}
@@ -132,10 +115,7 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     if (BlueGhost.state == "Hunt"){
         vector<bool> Sorties;
         Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
-        if(BlueGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(BlueGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(BlueGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(BlueGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,BlueGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 15;}
@@ -147,18 +127,12 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     if (BlueGhost.state == "Flee"){
         vector<bool> Sorties;
         Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
-        if(BlueGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(BlueGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(BlueGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(BlueGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,BlueGhost);
         MOVE(Sorties,BlueGhost.Pos.second,BlueGhost.Pos.first,34,28,BlueGhost);
     }
     if (BlueGhost.state == "Kill"){
         vector<bool> Sorties;
-        if(BlueGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(BlueGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(BlueGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(BlueGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,BlueGhost);
         Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         MOVE(Sorties,BlueGhost.Pos.second,BlueGhost.Pos.first,13,14,BlueGhost);
     }
@@ -166,10 +140,7 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
     if (BlueGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
-        if(BlueGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(BlueGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(BlueGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(BlueGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,BlueGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 21;}
@@ -188,10 +159,7 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
     if (OrangeGhost.state == "Hunt"){
         vector<bool> Sorties;
         Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
-        if(OrangeGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(OrangeGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(OrangeGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(OrangeGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,OrangeGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 12;}
@@ -199,34 +167,24 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         if(PacMan.viewdirection == "Bottom"){yp -= 13;}
         if(PacMan.viewdirection == "Left"){xp += 11;}
         MOVE(Sorties,OrangeGhost.Pos.second,OrangeGhost.Pos.first,xp,yp,OrangeGhost);
-//                cout << OrangeGhost.viewdirection << endl;
     }
     if (OrangeGhost.state == "Flee"){
         vector<bool> Sorties;
         Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
-        if(OrangeGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(OrangeGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(OrangeGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(OrangeGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,OrangeGhost);
         MOVE(Sorties,OrangeGhost.Pos.second,OrangeGhost.Pos.first,0,28,OrangeGhost);
     }
     if (OrangeGhost.state == "Kill"){
         vector<bool> Sorties;
         Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
-        if(OrangeGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(OrangeGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(OrangeGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(OrangeGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,OrangeGhost);
         MOVE(Sorties,OrangeGhost.Pos.second,OrangeGhost.Pos.first,13,14,OrangeGhost);
     }
 
     if (OrangeGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
-        if(OrangeGhost.viewdirection == "Top"){Sorties[2] = false;}
-        if(OrangeGhost.viewdirection == "Right"){Sorties[3] = false;}
-        if(OrangeGhost.viewdirection == "Bottom"){Sorties[0] = false;}
-        if(OrangeGhost.viewdirection == "Left"){Sorties[1] = false;}
+        Sorties = DemiTour(Sorties,OrangeGhost);
         unsigned xp = PacMan.Pos.second;
         unsigned yp = PacMan.Pos.first;
         if(PacMan.viewdirection == "Top"){yp += 24;}

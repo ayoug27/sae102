@@ -7,9 +7,9 @@ SOURCES += \
         Ghost/GhostMove.cpp \
         Ghost/PhaseGhost.cpp \
         Ghost/iaghost.cpp \
+        TourDeJeu/TourDeJeu.cpp \
         affichage.cpp \
         fonction.cpp \
-        game.cpp \
         main.cpp
         include(MinGL2/mingl.pri)
 
@@ -20,7 +20,7 @@ HEADERS += \
     GhostH/GhostMove.h \
     GhostH/PhaseGhost.h \
     GhostH/iaghost.h \
+    TourDeJeuH/TourDeJeu.h \
     affichage.h \
     fonction.h \
-    game.h \
     type.h

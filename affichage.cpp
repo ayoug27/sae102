@@ -45,3 +45,8 @@ void affichageNiveauGagne(MinGL & window){
     window << nsGui::Text(nsGraphics::Vec2D(285, 396), "Niveau suivant", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
 
 }
+
+//void affichageGameOver(MinGL & window){
+//    window << nsShape::Rectangle(nsGraphics::Vec2D(0, 0), nsGraphics::Vec2D(672, 790), nsGraphics::KBlack);
+//    window << nsGui::Text(nsGraphics::Vec2D(250, 376), "Game Over", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+//}

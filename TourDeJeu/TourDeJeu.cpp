@@ -17,7 +17,7 @@
 using namespace std;
 
 
-void game(){
+void TourDeJeu(){
 
     unsigned score = 0;
     unsigned niveau = 1;
@@ -118,7 +118,7 @@ void game(){
 
             }
 
-            gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
+            gumEating(PacMan,gumGrid, NbGum, score);//*************************************************************************
             if (peutmanger == false){
                 Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
             }
@@ -156,17 +156,17 @@ void game(){
                     RedGhost.Pos.second = 11;
                 }
                 if( PacMan.Pos == PinkGhost.Pos){
-                    score += 100;
+                    score += 200;
                     PinkGhost.Pos.first = 13;
                     PinkGhost.Pos.second = 11;
                 }
                 if(PacMan.Pos == BlueGhost.Pos){
-                    score += 100;
+                    score += 200;
                     BlueGhost.Pos.first = 13;
                     BlueGhost.Pos.second = 11;
                 }
                 if (PacMan.Pos == OrangeGhost.Pos){
-                    score += 100;
+                    score += 200;
                     OrangeGhost.Pos.first = 13;
                     OrangeGhost.Pos.second = 11;
                 }

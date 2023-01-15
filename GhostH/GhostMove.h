@@ -6,19 +6,7 @@
 #include <string>
 #include <map>
 
-class Ghost
-{
-public :
-    /**
-     * @bried this is ghost
-    */
-    /**
-     * @brief RedGhostMove : blablka
-     * @param RedGhost : test
-     * @param PacMan : pacman
-     * @param map
-     */
-};
+std::vector<bool> DemiTour(std::vector<bool> Sorties,Entity entity);
 
 void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map);
 
