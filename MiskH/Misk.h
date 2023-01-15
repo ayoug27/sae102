@@ -1,3 +1,12 @@
+/**
+ *
+ * @file : Misk.h
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @brief : Fonctions diverses et variés.
+ *
+**/
+
 #ifndef MISK_H
 #define MISK_H
 #include "type.h"

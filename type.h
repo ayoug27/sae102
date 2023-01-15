@@ -1,3 +1,12 @@
+/**
+ *
+ * @file : type.h
+ * @date : 15 jav 2023
+ * @author : Essalhi Ayoub, Lerouge Robin, Lestrelin Valentin, Brahmi Moundir, Ditlecadet Michael
+ * @brief : Initialisation de typedef, de constantes et de structs utiles au bon fonctionnement du programme.
+ *
+**/
+
 #ifndef TYPE_H
 #define TYPE_H
 

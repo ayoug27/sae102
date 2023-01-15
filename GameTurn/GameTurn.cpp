@@ -134,7 +134,7 @@ void TourDeJeu(){
 
             }
 
-            gumEating(PacMan,gumGrid, NbGum, score);//*************************************************************************
+            gumEating(PacMan,gumGrid, NbGum, score);
             if (peutmanger == false){
                 Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
             }
@@ -209,16 +209,6 @@ void TourDeJeu(){
             affichageVies(PacMan.SpriteMap, window, vies);
             affichageNiveau(window, niveau);
         }
-        //cout << RedGhost.viewdirection << "   " << RedGhost.state << endl;
-        //        for (unsigned y = 0; y < entityGrid.size(); ++y)
-        //                {
-        //                    for (unsigned x = 0; x < entityGrid[y].size(); ++x)
-        //                    {
-        //                        cout << entityGrid[y][x];
-        //                    }
-        //                    cout << endl;
-        //                }
-        //        cout << PacMan.Pos.first << "," << PacMan.Pos.second << " " << PacMan.viewdirection << " Taille du Tableau :" << entityGrid.size()-2 << endl;
         if (tick == 65535)
             tick = 0;
         if (NbGum == 0){
