@@ -19,6 +19,7 @@
 #include "mingl/mingl.h"
 #include "mingl/gui/sprite.h"
 #include "mingl/shape/rectangle.h"
+#include "mingl/audio/audioengine.h"
 
 
 

@@ -19,7 +19,7 @@
  * @param[in] score : Score actuel.
  * @fn void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score);
  */
-void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score);
+void gumEating(nsAudio::AudioEngine & audioEngine, Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score);
 
 /**
  * @brief Permet de passer d'un niveau à l'autre.

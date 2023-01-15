@@ -16,23 +16,33 @@
 #include "mingl/shape/rectangle.h"
 #include "type.h"
 #include "InitialisationH/Initialisation.h"
+#include "mingl/audio/audioengine.h"
 
 using namespace std;
 
 
-void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score)
+
+void gumEating(nsAudio::AudioEngine & audioEngine, Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score)
 {
     if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
         NbGum -=1;
         score += 10;
+        if (NbGum % 2 == 0) {
+        audioEngine.playSoundFromBuffer("../sae102/res/audio/pacman_ouvre.wav");
+        }
+        else audioEngine.playSoundFromBuffer("../sae102/res/audio/pacman_ferme.wav");
     }
     if (gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
         gumGrid[PacMan.Pos.second][PacMan.Pos.first] = KEmpty;
         NbGum -=1;
         score += 50;
+        audioEngine.playSoundFromBuffer("../sae102/res/audio/SUIII.wav");
     }
 }
+
+
+
 
 void ChangementNiveau(Entity & PacMan, Entity & Ghost1, Entity & Ghost2, Entity & Ghost3, Entity & Ghost4, map<char, CPos> posMap, CMat & gumGrid){
     PacMan.viewdirection = "Left";

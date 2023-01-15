@@ -24,6 +24,7 @@
 #include "DisplayH/Display.h"
 #include "InitialisationH/Initialisation.h"
 #include "MovementH/Movement.h"
+#include "mingl/audio/audioengine.h"
 
 
 using namespace std;
@@ -35,10 +36,18 @@ void GameTurn(){
     unsigned niveau = 1;
     unsigned vies = 3;
 
-    // Initialise le système
     MinGL window("PAC-MAN", nsGraphics::Vec2D(672, 790), nsGraphics::Vec2D(120, 120), nsGraphics::KBlack);
     window.initGlut();
     window.initGraphic();
+
+    // Initialise le sous-système audio et les sons utilisés
+    nsAudio::AudioEngine audioEngine;
+    audioEngine.loadSound("../sae102/res/audio/pacman_ouvre.wav");
+    audioEngine.loadSound("../sae102/res/audio/pacman_ferme.wav");
+    audioEngine.loadSound("../sae102/res/audio/SUIII.wav");
+    audioEngine.loadSound("../sae102/res/audio/pacman_death.wav");
+    audioEngine.loadSound("../sae102/res/audio/scare_ghost.wav");
+
 
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
@@ -107,7 +116,8 @@ void GameTurn(){
                     window << nsGui::Sprite (PacMan.SpriteMap["Dead"][dieTickAnimation % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
                     if (dieTickAnimation % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
                     {
-                        this_thread::sleep_for(chrono::milliseconds(50000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+                        audioEngine.playSoundFromBuffer("../sae102/res/audio/pacman_death.wav");
+                        this_thread::sleep_for(chrono::milliseconds(250000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
                         reinitLevel(PacMan, RedGhost, PinkGhost, OrangeGhost, BlueGhost, posMap);
                         Dead = false;
                         dieTickAnimation = 0;
@@ -134,7 +144,10 @@ void GameTurn(){
 
             }
 
-            gumEating(PacMan,gumGrid, NbGum, score);
+
+            gumEating(audioEngine, PacMan, gumGrid, NbGum, score);
+
+
             if (peutmanger == false){
                 Dead = isDead(PacMan, RedGhost, BlueGhost, OrangeGhost, PinkGhost);
             }
@@ -160,7 +173,6 @@ void GameTurn(){
 
             if (peutmanger == true)
             {
-
                 RedGhost.state = "Hide";
                 PinkGhost.state = "Hide";
                 BlueGhost.state = "Hide";
