@@ -67,6 +67,7 @@ void TourDeJeu(){
     map<char, CPos> posMap = gridInfo.second;
     CMat gumGrid = initGumMaze("../sae102/res/guminitialmap");
     int tick2 = 0;
+    unsigned dieTickAnimation = 0;
     PacMan.Pos = posMap[PacMan.ident];
     RedGhost.Pos = posMap[RedGhost.ident];
     OrangeGhost.Pos = posMap[OrangeGhost.ident];
@@ -92,15 +93,18 @@ void TourDeJeu(){
             WinRound = false;
         }
         if (Dead)
-        {
-            window << nsGui::Sprite (PacMan.SpriteMap["Dead"][tick % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
-            if (tick % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
-            {
-                this_thread::sleep_for(chrono::milliseconds(50000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
-                reinitLevel(PacMan, RedGhost, PinkGhost, OrangeGhost, BlueGhost, posMap);
-                Dead = false;
-                --vies;
-            }
+                {
+                    window << nsGui::Sprite (PacMan.SpriteMap["Dead"][dieTickAnimation % PacMan.SpriteMap["Dead"].size()], nsGraphics::Vec2D(24*PacMan.Pos.first-12,24*PacMan.Pos.second-12));
+                    if (dieTickAnimation % PacMan.SpriteMap["Dead"].size() == PacMan.SpriteMap["Dead"].size()-1)
+                    {
+                        this_thread::sleep_for(chrono::milliseconds(50000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+                        reinitLevel(PacMan, RedGhost, PinkGhost, OrangeGhost, BlueGhost, posMap);
+                        Dead = false;
+                        dieTickAnimation = 0;
+                        --vies;
+                    }
+                    else
+                        ++dieTickAnimation;
         }
         else {
             showGumInMaze(window,gumGrid,NbGum);
