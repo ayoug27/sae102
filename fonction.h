@@ -22,7 +22,7 @@ CMat initGumMaze(const std::string & sourceFile);
 
 void showGumInMaze(MinGL & window, const CMat & gumGrid, unsigned & NbGum);
 
-void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum);
+void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score);
 
 void move_entity_in_mat(CMat Mat, Entity entity);
 
