@@ -39,12 +39,6 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
         Sorties = DemiTour(Sorties,RedGhost);
         MOVE(Sorties,RedGhost.Pos.second,RedGhost.Pos.first,0,0,RedGhost);
     }
-    if (RedGhost.state == "Kill"){
-        vector<bool> Sorties;
-        Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
-        Sorties = DemiTour(Sorties,RedGhost);
-        MOVE(Sorties,RedGhost.Pos.second,RedGhost.Pos.first,13,14,RedGhost);
-    }
     if (RedGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
@@ -78,13 +72,6 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
         Sorties = DemiTour(Sorties,PinkGhost);
         MOVE(Sorties,PinkGhost.Pos.second,PinkGhost.Pos.first,28,0,PinkGhost);
     }
-    if (PinkGhost.state == "Kill"){
-        vector<bool> Sorties;
-        Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
-        Sorties = DemiTour(Sorties,PinkGhost);
-        MOVE(Sorties,PinkGhost.Pos.second,PinkGhost.Pos.first,13,14,PinkGhost);
-    }
-
     if (PinkGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
@@ -118,12 +105,6 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
         Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         Sorties = DemiTour(Sorties,BlueGhost);
         MOVE(Sorties,BlueGhost.Pos.second,BlueGhost.Pos.first,34,28,BlueGhost);
-    }
-    if (BlueGhost.state == "Kill"){
-        vector<bool> Sorties;
-        Sorties = DemiTour(Sorties,BlueGhost);
-        Sorties = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
-        MOVE(Sorties,BlueGhost.Pos.second,BlueGhost.Pos.first,13,14,BlueGhost);
     }
 
     if (BlueGhost.state == "Hide"){
@@ -160,13 +141,6 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         Sorties = DemiTour(Sorties,OrangeGhost);
         MOVE(Sorties,OrangeGhost.Pos.second,OrangeGhost.Pos.first,0,28,OrangeGhost);
     }
-    if (OrangeGhost.state == "Kill"){
-        vector<bool> Sorties;
-        Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
-        Sorties = DemiTour(Sorties,OrangeGhost);
-        MOVE(Sorties,OrangeGhost.Pos.second,OrangeGhost.Pos.first,13,14,OrangeGhost);
-    }
-
     if (OrangeGhost.state == "Hide"){
         vector<bool> Sorties;
         Sorties = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
