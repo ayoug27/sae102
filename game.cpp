@@ -58,7 +58,6 @@ void game(){
     BlueGhost.viewdirection = "Bottom";
     BlueGhost.ident = 'B';
     BlueGhost.SpriteMap = initSpriteMap("../sae102/res/sprites/blueghost/spriteMap");
-    bool test = false;
     bool WinRound = false;
     bool Dead = false;
     pair <CMat, map<char, CPos>> gridInfo = initEntityMaze("../sae102/res/mazeinitialmap");
@@ -107,7 +106,6 @@ void game(){
 
             if(gumGrid[PacMan.Pos.second][PacMan.Pos.first] == KSuperGum){
                 peutmanger = true;
-                test = true;
             }
 
             gumEating(PacMan,gumGrid, NbGum);//*************************************************************************
