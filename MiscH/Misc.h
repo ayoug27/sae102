@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream:MiskH/Misk.h
 /**
  *
  * @file : Misk.h
@@ -7,13 +6,9 @@
  * @brief : Fonctions diverses et variés.
  *
 **/
-
-#ifndef MISK_H
-#define MISK_H
-=======
 #ifndef MISC_H
 #define MISC_H
->>>>>>> Stashed changes:MiscH/Misc.h
+
 #include "type.h"
 
 void gumEating(Entity PacMan, CMat & gumGrid, unsigned & NbGum, unsigned & score);
