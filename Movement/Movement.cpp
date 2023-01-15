@@ -127,43 +127,43 @@ void pacManMovement(CMat & entityGrid, Entity & PacMan,short unsigned & tick)
 }
 
 
-//void move_entity_in_mat(CMat Mat, Entity entity){
-//    Mat[entity.Pos.second][entity.Pos.first] = KEmpty;
-//    if (entity.viewdirection == "Top"){
-//        if (Mat[entity.Pos.second-1][entity.Pos.first]!= KWall){
-//            Mat[entity.Pos.second-1][entity.Pos.first] = entity.ident;
-//            entity.Pos.second -=1;
-//        }
-//    }
-//    if (entity.viewdirection == "Right"){
-//        if (Mat[entity.Pos.second][entity.Pos.first+1]!= KWall){
-//            if (entity.Pos.first+1 > Mat[entity.Pos.second].size()-1){
-//                Mat[entity.Pos.second][0]= entity.ident;
-//                entity.Pos.first = 0;
-//            }
-//            else {
-//                Mat[entity.Pos.second][entity.Pos.first+1] = entity.ident;
-//                entity.Pos.first +=1;
-//            }
-//        }
-//    }
-//    if (entity.viewdirection == "Bottom"){
-//        if (Mat[entity.Pos.second+1][entity.Pos.first]!= KWall){
-//            Mat[entity.Pos.second+1][entity.Pos.first] = entity.ident;
-//            entity.Pos.second +=1;
-//        }
-//    }
-//    if (entity.viewdirection == "Left"){
-//        if (Mat[entity.Pos.second][entity.Pos.first-1]!= KWall){
-//            if (entity.Pos.first-1 < 0){
-//                Mat[entity.Pos.second][Mat[entity.Pos.second].size()-1]= entity.ident;
-//                entity.Pos.first = Mat[entity.Pos.second].size()-1;
-//            }
-//            else {
-//                Mat[entity.Pos.second][entity.Pos.first-1] = entity.ident;
-//                entity.Pos.first -=1;
-//            }
-//        }
-//    }
-//}
+void move_entity_in_mat(CMat Mat, Entity entity){
+    Mat[entity.Pos.second][entity.Pos.first] = KEmpty;
+    if (entity.viewdirection == "Top"){
+        if (Mat[entity.Pos.second-1][entity.Pos.first]!= KWall){
+            Mat[entity.Pos.second-1][entity.Pos.first] = entity.ident;
+            entity.Pos.second -=1;
+        }
+    }
+    if (entity.viewdirection == "Right"){
+        if (Mat[entity.Pos.second][entity.Pos.first+1]!= KWall){
+            if (entity.Pos.first+1 > Mat[entity.Pos.second].size()-1){
+                Mat[entity.Pos.second][0]= entity.ident;
+                entity.Pos.first = 0;
+            }
+            else {
+                Mat[entity.Pos.second][entity.Pos.first+1] = entity.ident;
+                entity.Pos.first +=1;
+            }
+        }
+    }
+    if (entity.viewdirection == "Bottom"){
+        if (Mat[entity.Pos.second+1][entity.Pos.first]!= KWall){
+            Mat[entity.Pos.second+1][entity.Pos.first] = entity.ident;
+            entity.Pos.second +=1;
+        }
+    }
+    if (entity.viewdirection == "Left"){
+        if (Mat[entity.Pos.second][entity.Pos.first-1]!= KWall){
+            if (entity.Pos.first-1 < 0){
+                Mat[entity.Pos.second][Mat[entity.Pos.second].size()-1]= entity.ident;
+                entity.Pos.first = Mat[entity.Pos.second].size()-1;
+            }
+            else {
+                Mat[entity.Pos.second][entity.Pos.first-1] = entity.ident;
+                entity.Pos.first -=1;
+            }
+        }
+    }
+}
 
