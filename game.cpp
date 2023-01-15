@@ -121,6 +121,10 @@ void game(){
             }
             if (peutmanger == true && tick2 == 1){
                 peutmanger = false;
+                RedGhost.state = "hunt";
+                PinkGhost.state = "hunt";
+                BlueGhost.state = "hunt";
+                OrangeGhost.state = "hunt";
             }
 
             Phase(phase,tick,RedGhost);

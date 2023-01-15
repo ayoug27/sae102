@@ -50,7 +50,7 @@ void RedGhostMove (Entity & RedGhost, Entity PacMan, CMat map){
         if(RedGhost.viewdirection == "Left"){intersection[1] = false;}
         MOVE(intersection,RedGhost.Pos.second,RedGhost.Pos.first,13,14,RedGhost);
     }
-    if (RedGhost.state == "hide"){
+    if (RedGhost.state == "Hide"){
         vector<bool> intersection;
         intersection = nbsortie(RedGhost.Pos.second,RedGhost.Pos.first,map);
         if(RedGhost.viewdirection == "Top"){intersection[2] = false;}
@@ -105,7 +105,7 @@ void PinkGhostMove (Entity & PinkGhost ,Entity PacMan, CMat map){
         MOVE(intersection,PinkGhost.Pos.second,PinkGhost.Pos.first,13,14,PinkGhost);
     }
 
-    if (PinkGhost.state == "hide"){
+    if (PinkGhost.state == "Hide"){
         vector<bool> intersection;
         intersection = nbsortie(PinkGhost.Pos.second,PinkGhost.Pos.first,map);
         if(PinkGhost.viewdirection == "Top"){intersection[2] = false;}
@@ -161,7 +161,7 @@ void BlueGhostMove (Entity & BlueGhost,Entity PacMan, CMat map){
         MOVE(intersection,BlueGhost.Pos.second,BlueGhost.Pos.first,13,14,BlueGhost);
     }
 
-    if (BlueGhost.state == "hide"){
+    if (BlueGhost.state == "Hide"){
         vector<bool> intersection;
         intersection = nbsortie(BlueGhost.Pos.second,BlueGhost.Pos.first,map);
         if(BlueGhost.viewdirection == "Top"){intersection[2] = false;}
@@ -218,7 +218,7 @@ void OrangeGhostMove (Entity & OrangeGhost,Entity PacMan, CMat map){
         MOVE(intersection,OrangeGhost.Pos.second,OrangeGhost.Pos.first,13,14,OrangeGhost);
     }
 
-    if (OrangeGhost.state == "hide"){
+    if (OrangeGhost.state == "Hide"){
         vector<bool> intersection;
         intersection = nbsortie(OrangeGhost.Pos.second,OrangeGhost.Pos.first,map);
         if(OrangeGhost.viewdirection == "Top"){intersection[2] = false;}
